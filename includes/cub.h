@@ -6,6 +6,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <limits.h>
+# include "../libft/libft.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 64
@@ -25,7 +26,7 @@ typedef struct	s_params
 	int floor_r;
 	int floor_g;
 	int floor_b;
-	int sprite_path;
+	char sprite_path;
 	int start_map;
 	int header_error;
 	int map_error;

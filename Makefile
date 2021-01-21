@@ -1,8 +1,8 @@
-SRCS = parsing/parsing.c
+SRCS = parsing/parsing.c get_next_line/get_next_line.c
 
 OBJS = ${SRCS:.c=.o}
 
-INCLUDES = includes/cub.h get_next_line/get_next_line.h
+INCLUDES = includes/cub.h
 
 NAME = cub3d
 
@@ -17,9 +17,10 @@ CFLAGS = -Wall -Wextra -Werror
 
 ${NAME}: ${OBJS}
 		${MAKE} -C ./libft
-		cp libft/libft.a ${NAME}
+		cp libft/libft.a .
 
-all:	${NAME}
+all:	
+	${CC} ${CFLAGS} parsing/parsing.c get_next_line/get_next_line.c -L. -lft
 
 clean:
 	${MAKE} clean -C ./libft
