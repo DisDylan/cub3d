@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../includes/cub.h"
 
 static char			*ft_strncpy(char *dst, char *src, size_t n)
 {

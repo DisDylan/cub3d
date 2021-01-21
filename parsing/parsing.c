@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "file.h"
+#include "../includes/cub.h"
 
 t_params	init(t_struct params)
 {
