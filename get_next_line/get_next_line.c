@@ -6,37 +6,59 @@
 /*   By: dpoinsu <dpoinsu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:50:15 by dpoinsu           #+#    #+#             */
-/*   Updated: 2021/01/21 15:35:04 by dpoinsu          ###   ########.fr       */
+/*   Updated: 2021/01/21 15:49:42 by dpoinsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub.h"
+#include "get_next_line.h"
 
-static char	*ft_strgchr(const char *str, int c)
+size_t			ft_strglen(const char *str)
 {
 	size_t i;
 
 	i = 0;
-	if (!str)
-		return (NULL);
-	if (c == 0)
-		return ((char*)str + ft_strlen(str));
 	while (str[i])
-	{
-		if (str[i] == (unsigned char)c)
-			return ((char*)str + i);
 		i++;
-	}
-	return (NULL);
+	return (i);
 }
 
-static char			*ft_strndup(char *s, size_t len)
+static char			*ft_strncpy(char *dst, char *src, size_t n)
+{
+	size_t		i;
+
+	if (dst == 0 && src == 0)
+		return (dst);
+	i = 0;
+	while (i < n)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	return (dst);
+}
+
+static char			*ft_strgjoin(char *s1, char *s2)
+{
+	char *nstr;
+
+	if (!s1 && !s2)
+		return (NULL);
+	if (!(nstr = (char*)malloc(sizeof(nstr) *
+					(ft_strglen(s1) + ft_strglen(s2) + 1))))
+		return (NULL);
+	ft_strncpy(nstr, s1, ft_strglen(s1));
+	ft_strncpy(nstr + ft_strglen(s1), s2, ft_strglen(s2));
+	nstr[ft_strglen(s1) + ft_strglen(s2)] = '\0';
+	return (nstr);
+}
+
+static char			*ft_strgdup(char *s, size_t len)
 {
 	char *nstr;
 
 	if (!(nstr = (char*)malloc(sizeof(nstr) * (len + 1))))
 		return (NULL);
-	ft_strlcpy(nstr, s, len);
+	ft_strncpy(nstr, s, len);
 	nstr[len] = '\0';
 	return (nstr);
 }
@@ -47,8 +69,8 @@ static int			make_new_line(char **save, char **line, char *str)
 
 	if (str != NULL)
 	{
-		*line = ft_strndup(*save, str - *save);
-		tmp = ft_strndup(str + 1, ft_strlen(str + 1));
+		*line = ft_strgdup(*save, str - *save);
+		tmp = ft_strgdup(str + 1, ft_strglen(str + 1));
 		free(*save);
 		*save = tmp;
 		return (1);
@@ -59,7 +81,7 @@ static int			make_new_line(char **save, char **line, char *str)
 		*save = NULL;
 	}
 	else
-		*line = ft_strndup("", 1);
+		*line = ft_strgdup("", 1);
 	return (0);
 }
 
@@ -78,9 +100,9 @@ int					get_next_line(int fd, char **line)
 	{
 		buffer[len] = 0;
 		if (save[fd] == NULL)
-			tmp = ft_strndup(buffer, len);
+			tmp = ft_strgdup(buffer, len);
 		else
-			tmp = ft_strjoin(save[fd], buffer);
+			tmp = ft_strgjoin(save[fd], buffer);
 		if (save[fd] != 0)
 			free(save[fd]);
 		save[fd] = tmp;

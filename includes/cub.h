@@ -7,10 +7,7 @@
 # include <stdio.h>
 # include <limits.h>
 # include "../libft/libft.h"
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 64
-# endif
+# include "../get_next_line/get_next_line.h"
 
 typedef struct	s_params
 {
@@ -28,15 +25,15 @@ typedef struct	s_params
 	int floor_b;
 	char sprite_path;
 	int start_map;
-	int header_error;
+	char *header_error;
 	int map_error;
 	char **map;
 }				t_params;
 
-int			get_next_line(int fd, char **line);
 void		parsing(char *path_fd);
-t_params	get_map_line(char *str, t_params params);
-void		header_error_message(void);
+t_params	header_error_message(t_params params);
 t_params	treat_info(char *str, t_params params);
+t_params        get_res(char *str, t_params params);
+size_t		check_res(char *str, t_params *params, size_t j);
 
 #endif

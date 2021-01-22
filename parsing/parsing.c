@@ -6,7 +6,7 @@
 /*   By: dpoinsu <dpoinsu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 09:31:43 by dpoinsu           #+#    #+#             */
-/*   Updated: 2021/01/21 15:19:13 by dpoinsu          ###   ########.fr       */
+/*   Updated: 2021/01/22 10:11:19 by dpoinsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_params	init_params(void)
 	params.floor_g = -1;
 	params.floor_b = -1;
 	params.start_map = -1;
-	params.header_error = 0;
+	params.header_error = NULL;
 	params.map_error = 0;
 	return (params);
 }	
@@ -34,44 +34,36 @@ void		parsing(char *path_fd)
 {
 	char *str;
 	int fd;
+	int i;
 	t_params params;
 
-	printf("ok");
 	fd = open(path_fd, O_RDONLY);
-	printf("ok");
 	params = init_params();
-	while (get_next_line(fd, &str) == 1)
+	while ((i = get_next_line(fd, &str)) == 1)
 	{
 		if (params.start_map == 1)
-			params = get_map_line(str, params);
+			break;
 		else
 		{
 			params = treat_info(str, params);
-			if (params.header_error == 1)
-				return (header_error_message());
+			if (params.header_error != NULL)
+			{
+				printf("%s\n", params.header_error);
+				break;
+			}
 		}
 	}
 }
 
-t_params	get_map_line(char *str, t_params params)
-{
-
-	printf("ok\n");
-	printf("%s\n", str);
-	return (params);
-}
-
-void		header_error_message(void)
-{
-	write(1, "Une erreur à été rencontré dans les paramètres !\n", 49);
-}
-
 t_params	treat_info(char *str, t_params params)
 {
-	if (str[0] == '\n')
-		printf("Ligne vide\n");
+	if (str[0] == '\n' || str[0] == '\0')
+		return(params);
 	else if (str[0] == 'R')
-		printf("Résolution\n");
+	{
+		params = get_res(str, params);
+		printf("%d et %d (HIGH & LEN)\n", params.res_high, params.res_len);
+	}
 	else if (str[0] == 'N' && str[1] == 'O')
 		printf("NO path\n");
 	else if (str[0] == 'S' && str[1] == 'O')

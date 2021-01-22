@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpoinsu <dpoinsu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/20 09:21:05 by dpoinsu           #+#    #+#             */
-/*   Updated: 2021/01/21 15:54:28 by dpoinsu          ###   ########.fr       */
+/*   Created: 2020/11/27 14:12:33 by dpoinsu           #+#    #+#             */
+/*   Updated: 2021/01/21 15:49:29 by dpoinsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/cub.h"
+#include "get_next_line.h"
 
-int main(int argc, char **argv)
+char	*ft_strgchr(const char *str, int c)
 {
-	char *path;
-	int nb;
+	size_t i;
 
-	nb = argc;
-	path = ft_strdup(argv[1]);
-	printf("\n\n\n\n\n");
-	parsing(path);
-	return (0);
+	i = 0;
+	if (!str)
+		return (NULL);
+	if (c == 0)
+		return ((char*)str + ft_strglen(str));
+	while (str[i])
+	{
+		if (str[i] == (unsigned char)c)
+			return ((char*)str + i);
+		i++;
+	}
+	return (NULL);
 }

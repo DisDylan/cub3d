@@ -1,4 +1,4 @@
-SRCS = parsing/parsing.c get_next_line/get_next_line.c
+SRCS = parsing/parsing.c parsing/resolution.c get_next_line/*.c main.c
 
 OBJS = ${SRCS:.c=.o}
 
@@ -20,7 +20,7 @@ ${NAME}: ${OBJS}
 		cp libft/libft.a .
 
 all:	
-	${CC} ${CFLAGS} parsing/parsing.c get_next_line/get_next_line.c -L. -lft
+	${CC} ${CFLAGS} parsing/parsing.c get_next_line/*.c main.c -L. -lft
 
 clean:
 	${MAKE} clean -C ./libft
@@ -32,3 +32,6 @@ fclean:	clean
 
 re:	fclean all
 
+test:
+	${CC} ${CFLAGS} -o cub3d ${SRCS} -L. -lft
+	./cub3d map/map.cub
