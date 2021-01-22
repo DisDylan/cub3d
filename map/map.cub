@@ -1,14 +1,14 @@
 R 900 600
 
-NO ../sprites/sprite_one
+NO ../sprites/sprite_one 
 SO ../sprites/sprite_two
 WE ../sprites/sprite_three
 EA ../sprites/sprite_four
 
 S ../sprites/sprite_item
 
-F 220,100,0
-C 225,30,0
+F 220, 100, 0
+C 225, 30, 0
 
 11111111111111111111
 10000000000020202001

@@ -6,11 +6,34 @@
 /*   By: dpoinsu <dpoinsu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 09:31:43 by dpoinsu           #+#    #+#             */
-/*   Updated: 2021/01/22 10:11:19 by dpoinsu          ###   ########.fr       */
+/*   Updated: 2021/01/22 16:14:13 by dpoinsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub.h"
+
+static t_params        print_linfo(char *str, t_params params)
+{
+        if (str[0] == '\n' || str[0] == '\0')
+                return(params);
+        else if (str[0] == 'R')
+                printf("Résolution : %d & %d\n", params.res_high, params.res_len);
+        else if (str[0] == 'N' && str[1] == 'O')
+                printf("Nord : %s\n", params.north_path);
+        else if (str[0] == 'S' && str[1] == 'O')
+                printf("Sud : %s\n", params.south_path);
+        else if (str[0] == 'W' && str[1] == 'E')
+                printf("West : %s\n", params.west_path);
+        else if (str[0] == 'E' && str[1] == 'A')
+                printf("East : %s\n", params.east_path);
+        else if (str[0] == 'S')
+                printf("Item : %s\n", params.sprite_path);
+        else if (str[0] == 'F')
+                printf("Floor : %d & %d & %d\n", params.floor_r, params.floor_g, params.floor_b);
+        else if (str[0] == 'C')
+                printf("Ceil : %d & %d & %d\n", params.ceil_r, params.ceil_g, params.ceil_b);
+        return (params);
+}
 
 t_params	init_params(void)
 {
@@ -25,6 +48,11 @@ t_params	init_params(void)
 	params.floor_g = -1;
 	params.floor_b = -1;
 	params.start_map = -1;
+	params.north_path = NULL;
+	params.south_path = NULL;
+	params.west_path = NULL;
+	params.east_path = NULL;
+	params.sprite_path = NULL;
 	params.header_error = NULL;
 	params.map_error = 0;
 	return (params);
@@ -46,6 +74,7 @@ void		parsing(char *path_fd)
 		else
 		{
 			params = treat_info(str, params);
+			params = print_linfo(str, params);
 			if (params.header_error != NULL)
 			{
 				printf("%s\n", params.header_error);
@@ -60,28 +89,20 @@ t_params	treat_info(char *str, t_params params)
 	if (str[0] == '\n' || str[0] == '\0')
 		return(params);
 	else if (str[0] == 'R')
-	{
 		params = get_res(str, params);
-		printf("%d et %d (HIGH & LEN)\n", params.res_high, params.res_len);
-	}
 	else if (str[0] == 'N' && str[1] == 'O')
-		printf("NO path\n");
+		params.north_path = get_path(str + 2, &params);
 	else if (str[0] == 'S' && str[1] == 'O')
-		printf("SO path\n");
+		params.south_path = get_path(str + 2, &params);
 	else if (str[0] == 'W' && str[1] == 'E')
-		printf("WE path\n");
+		params.west_path = get_path(str + 2, &params);
 	else if (str[0] == 'E' && str[1] == 'A')
-		printf("EA path\n");
+		params.east_path = get_path(str + 2, &params);
 	else if (str[0] == 'S')
-		printf("Sprite\n");
+		params.sprite_path = get_path(str + 1, &params);
 	else if (str[0] == 'F')
-		printf("Floor\n");
+		params = get_floor_rgb(str + 1, params);
 	else if (str[0] == 'C')
-		printf("Ceil\n");
-	/*else if (ft_memchr((void)str, '1', ft_strlen(str)))
-	{
-		params.map[0] = ft_strdup(str);
-		return (params.start_map = 1);
-	}*/
+		params = get_ceil_rgb(str + 1, params);
 	return (params);
 }

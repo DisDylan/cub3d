@@ -23,7 +23,7 @@ typedef struct	s_params
 	int floor_r;
 	int floor_g;
 	int floor_b;
-	char sprite_path;
+	char *sprite_path;
 	int start_map;
 	char *header_error;
 	int map_error;
@@ -35,5 +35,12 @@ t_params	header_error_message(t_params params);
 t_params	treat_info(char *str, t_params params);
 t_params        get_res(char *str, t_params params);
 size_t		check_res(char *str, t_params *params, size_t j);
+t_params	header_no_message(t_params params);
+size_t		path_len(char *str, size_t *i);
+char		*get_path(char *str, t_params *params);
+t_params        get_ceil_rgb(char *str, t_params);
+t_params        get_floor_rgb(char *str, t_params);
+void            put_int_rgb(int *r, int *g, int *b, char *str, t_params *params);
+t_params        error_rgb(t_params params);
 
 #endif
