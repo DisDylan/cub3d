@@ -6,7 +6,7 @@
 /*   By: dpoinsu <dpoinsu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 09:31:43 by dpoinsu           #+#    #+#             */
-/*   Updated: 2021/01/22 16:14:13 by dpoinsu          ###   ########.fr       */
+/*   Updated: 2021/01/22 16:51:36 by dpoinsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,16 @@ void		parsing(char *path_fd)
 	char *str;
 	int fd;
 	int i;
+	int nb_lines;
 	t_params params;
 
+	nb_lines = 1;
 	fd = open(path_fd, O_RDONLY);
 	params = init_params();
 	while ((i = get_next_line(fd, &str)) == 1)
 	{
-		if (params.start_map == 1)
-			break;
+		if (params.start_map == 0)
+			nb_lines++;
 		else
 		{
 			params = treat_info(str, params);
@@ -82,6 +84,16 @@ void		parsing(char *path_fd)
 			}
 		}
 	}
+	printf("lines map: %d\n", nb_lines);
+	// GET MAP **map = malloc(sizeof(**map) * nb_lines + 1)
+	// PASS_INFO
+	// map[0] = ft_strdup(str);
+	// map[1] = ft_strdup(str);
+	// ....
+	// map[-1] = "/0";
+	// CHECK GETMAP
+	// 	while(**map)
+	// 		printf(*map);
 }
 
 t_params	treat_info(char *str, t_params params)
@@ -104,5 +116,7 @@ t_params	treat_info(char *str, t_params params)
 		params = get_floor_rgb(str + 1, params);
 	else if (str[0] == 'C')
 		params = get_ceil_rgb(str + 1, params);
+	else
+		params.start_map = 0;
 	return (params);
 }
