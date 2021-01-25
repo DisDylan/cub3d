@@ -6,7 +6,7 @@
 /*   By: dpoinsu <dpoinsu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 14:00:55 by dpoinsu           #+#    #+#             */
-/*   Updated: 2021/01/25 09:53:20 by dpoinsu          ###   ########.fr       */
+/*   Updated: 2021/01/25 10:14:01 by dpoinsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,9 @@ t_params	get_map(int fd, char *str, t_params params, char *path, int line_map)
 	size_map = 1;
 	while ((i = get_next_line(fd, &str)) == 1)
 		size_map++;
-	// début map ligne 12;
-	// tant qu'on read, nb_line ++;
 	close(fd);
-	// close
-	// malloc
-	params.map = malloc(sizeof(params.map) * size_map + 2);
-	// open
+	params.map = malloc(sizeof(params.map) * (size_map + 2));
 	fd = open(path, O_RDONLY);
-	// tant qu'on est pas à 12, ++;
 	while (nb_lines != line_map)
 	{
 		i = get_next_line(fd, &str);
@@ -59,6 +53,7 @@ t_params	get_map(int fd, char *str, t_params params, char *path, int line_map)
 		params.map[i] = ft_strdup(str);
 		i++;
 	}
+	params.map[i] = NULL;
 	close(fd);
 	return (params);
 }
