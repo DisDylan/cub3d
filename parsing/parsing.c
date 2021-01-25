@@ -6,7 +6,7 @@
 /*   By: dpoinsu <dpoinsu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 09:31:43 by dpoinsu           #+#    #+#             */
-/*   Updated: 2021/01/22 16:51:36 by dpoinsu          ###   ########.fr       */
+/*   Updated: 2021/01/25 09:33:51 by dpoinsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,25 @@ void		parsing(char *path_fd)
 	char *str;
 	int fd;
 	int i;
-	int nb_lines;
+	int line_map;
 	t_params params;
 
-	nb_lines = 1;
+	line_map = 1;
 	fd = open(path_fd, O_RDONLY);
 	params = init_params();
 	while ((i = get_next_line(fd, &str)) == 1)
 	{
 		if (params.start_map == 0)
-			nb_lines++;
+		{
+			if (start_map(str))
+				 params = get_map(fd, str, params, path_fd, line_map);
+			i = 0;
+			while (params.map[i])
+			{
+				printf("Line map = %s\n", params.map[i]);
+				i++;
+			}
+		}
 		else
 		{
 			params = treat_info(str, params);
@@ -82,9 +91,9 @@ void		parsing(char *path_fd)
 				printf("%s\n", params.header_error);
 				break;
 			}
+			line_map++;
 		}
 	}
-	printf("lines map: %d\n", nb_lines);
 	// GET MAP **map = malloc(sizeof(**map) * nb_lines + 1)
 	// PASS_INFO
 	// map[0] = ft_strdup(str);

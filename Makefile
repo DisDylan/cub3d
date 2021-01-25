@@ -20,7 +20,7 @@ ${NAME}: ${OBJS}
 		cp libft/libft.a .
 
 all:	
-	${CC} ${CFLAGS} parsing/parsing.c get_next_line/*.c main.c -L. -lft
+	${CC} ${CFLAGS} parsing/*.c get_next_line/*.c main.c -L. -lft
 
 clean:
 	${MAKE} clean -C ./libft

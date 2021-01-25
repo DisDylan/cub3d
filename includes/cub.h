@@ -42,5 +42,7 @@ t_params        get_ceil_rgb(char *str, t_params);
 t_params        get_floor_rgb(char *str, t_params);
 void            put_int_rgb(int *r, int *g, int *b, char *str, t_params *params);
 t_params        error_rgb(t_params params);
+t_params        get_map(int fd, char *str, t_params params, char *path, int line_map);
+int             start_map(char *str);
 
 #endif
