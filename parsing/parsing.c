@@ -6,7 +6,7 @@
 /*   By: dpoinsu <dpoinsu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 09:31:43 by dpoinsu           #+#    #+#             */
-/*   Updated: 2021/01/25 09:33:51 by dpoinsu          ###   ########.fr       */
+/*   Updated: 2021/01/25 12:05:02 by dpoinsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ void		parsing(char *path_fd)
 		if (params.start_map == 0)
 		{
 			if (start_map(str))
+			{
 				 params = get_map(fd, str, params, path_fd, line_map);
+				 break;
+			}
 			i = 0;
 			while (params.map[i])
 			{
@@ -94,15 +97,10 @@ void		parsing(char *path_fd)
 			line_map++;
 		}
 	}
-	// GET MAP **map = malloc(sizeof(**map) * nb_lines + 1)
-	// PASS_INFO
-	// map[0] = ft_strdup(str);
-	// map[1] = ft_strdup(str);
-	// ....
-	// map[-1] = "/0";
-	// CHECK GETMAP
-	// 	while(**map)
-	// 		printf(*map);
+	if (check_map(&params))
+		printf("!!!!!!\nTOUT EST OK YOUPI\n!!!!!!!\n");
+	else
+		printf("%s\n", params.map_error);
 }
 
 t_params	treat_info(char *str, t_params params)

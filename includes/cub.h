@@ -26,7 +26,7 @@ typedef struct	s_params
 	char *sprite_path;
 	int start_map;
 	char *header_error;
-	int map_error;
+	char *map_error;
 	char **map;
 }				t_params;
 
@@ -44,5 +44,9 @@ void            put_int_rgb(int *r, int *g, int *b, char *str, t_params *params)
 t_params        error_rgb(t_params params);
 t_params        get_map(int fd, char *str, t_params params, char *path, int line_map);
 int             start_map(char *str);
+int             check_map(t_params *params);
+void            check_line(char **tab, int i, t_params *params);
+void            check_item(char c, t_params *params);
+void            check_first_line(char *line, t_params *params);
 
 #endif
