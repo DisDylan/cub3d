@@ -33,5 +33,5 @@ fclean:	clean
 re:	fclean all
 
 test:
-	${CC} ${CFLAGS} -o cub3d ${SRCS} -L. -lft
+	${CC} ${CFLAGS} -o cub3d ${SRCS} -L. -lft -Lmlx_linux -lmlx_Linux -lXext -lX11 -lm -lz
 	./cub3d map/map.cub
