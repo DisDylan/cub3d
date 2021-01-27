@@ -14,8 +14,10 @@
 # define KEY_Q 113
 # define KEY_S 115
 # define KEY_D 100
-# define ROT_LEFT 65361
-# define ROT_RIGHT 65363
+# define ARROW_LEFT 65361
+# define ARROW_RIGHT 65363
+# define ARROW_DOWN 65364
+# define ARROW_UP 65362
 # define ESCAPE 65307
 # define SPACE 32
 
