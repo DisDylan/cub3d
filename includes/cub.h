@@ -10,6 +10,15 @@
 # include "../get_next_line/get_next_line.h"
 # include "../mlx_linux/mlx.h"
 
+# define KEY_Z 122
+# define KEY_Q 113
+# define KEY_S 115
+# define KEY_D 100
+# define ROT_LEFT 65361
+# define ROT_RIGHT 65363
+# define ESCAPE 65307
+# define SPACE 32
+
 typedef struct	s_params
 {
 	int res_high;
