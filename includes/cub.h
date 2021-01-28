@@ -42,7 +42,7 @@ typedef struct	s_params
 	char **map;
 }				t_params;
 
-void		parsing(char *path_fd);
+t_params	parsing(char *path_fd);
 t_params	header_error_message(t_params params);
 t_params	treat_info(char *str, t_params params);
 t_params        get_res(char *str, t_params params);

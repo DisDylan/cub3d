@@ -6,7 +6,7 @@
 /*   By: dpoinsu <dpoinsu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 09:21:05 by dpoinsu           #+#    #+#             */
-/*   Updated: 2021/01/27 17:01:31 by dpoinsu          ###   ########.fr       */
+/*   Updated: 2021/01/28 09:45:20 by dpoinsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct	s_vars
 	void *win;
 	int x;
 	int y;
+	char **map;
 }		t_vars;
 
 void    my_mlx_pixel_put(t_vars *data, int x, int y, int color)
@@ -81,9 +82,9 @@ int	draw_rect(int x, int y, t_vars *vars, int color)
 		while (j < 10)
 		{
 			if (color == 1)
-				my_mlx_pixel_put(vars, x + i, y + j, 0x00FF0000);
+				my_mlx_pixel_put(vars, y + i, x + j, 0x00FFFFFF);
 			else
-				my_mlx_pixel_put(vars, x + i, y + j, 0x00FFFF00);
+				my_mlx_pixel_put(vars, y + i, x + j, 0x00555555);
 			j++;
 		}
 		i++;
@@ -95,34 +96,25 @@ int	draw_rect(int x, int y, t_vars *vars, int color)
 
 int	draw_map(t_vars *vars)
 {
-	char **map;
 	int i;
 	int j;
 
 	i = 0;
 	j = 0;
-	map = malloc(sizeof(map) * 6);
-	map[0] = ft_strdup("11111");
-	map[1] = ft_strdup("10001");
-	map[2] = ft_strdup("10101");
-	map[3] = ft_strdup("10001");
-	map[4] = ft_strdup("11111");
-	map[5] = NULL;
-	while (map[i])
+	while (vars->map[i])
 	{
-		while (map[i][j])
+		printf("%s\n\n&&\n", vars->map[i]);
+		while (vars->map[i][j])
 		{
-			printf("là ca va\n");
-			if (map[i][j] == '0')
-				draw_rect(i * 10, j * 10, vars, 1);
-			else if (map[i][j] == '1')
-				draw_rect(i * 10, j * 10, vars, 2);
+			if (vars->map[i][j] == '0')
+				draw_rect(i * 11, j * 11, vars, 1);
+			else if (vars->map[i][j] == '1')
+				draw_rect(i * 11, j * 11, vars, 2);
 			j++;
 		}
 		j = 0;
 		i++;
 	}
-	printf("ok ici \n");
 	return (0);
 }
 
@@ -179,6 +171,7 @@ int main(int argc, char **argv)
 	char *path;
 	int nb;
 	t_vars vars;
+	t_params params;
 	int x;
 	int y;
 //	int rgb;
@@ -188,7 +181,8 @@ int main(int argc, char **argv)
 	nb = argc;
 	path = ft_strdup(argv[1]);
 	printf("\n\n\n\n\n");
-	parsing(path);
+	params = parsing(path);
+	vars.map = params.map;
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, 900, 600, "Hello there");
 	vars.img = mlx_new_image(vars.mlx, 900, 600);

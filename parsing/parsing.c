@@ -6,7 +6,7 @@
 /*   By: dpoinsu <dpoinsu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 09:31:43 by dpoinsu           #+#    #+#             */
-/*   Updated: 2021/01/25 12:05:02 by dpoinsu          ###   ########.fr       */
+/*   Updated: 2021/01/28 09:30:11 by dpoinsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_params	init_params(void)
 	return (params);
 }	
 
-void		parsing(char *path_fd)
+t_params	parsing(char *path_fd)
 {
 	char *str;
 	int fd;
@@ -101,6 +101,7 @@ void		parsing(char *path_fd)
 		printf("!!!!!!\nTOUT EST OK YOUPI\n!!!!!!!\n");
 	else
 		printf("%s\n", params.map_error);
+	return (params);
 }
 
 t_params	treat_info(char *str, t_params params)
