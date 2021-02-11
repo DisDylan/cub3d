@@ -6,7 +6,7 @@
 /*   By: dpoinsu <dpoinsu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 09:21:05 by dpoinsu           #+#    #+#             */
-/*   Updated: 2021/02/11 10:13:33 by dpoinsu          ###   ########.fr       */
+/*   Updated: 2021/02/11 12:25:36 by dpoinsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,34 @@ typedef struct	s_data
 	int line_length;
 	int endian;
 }		t_data;
+
+typedef struct s_ray
+{
+	double posx;
+	double posy;
+	double dirx;
+	double diry;
+	double planx;
+	double plany;
+	double raydirx;
+	double raydiry;
+	double camerax;
+	int mapx;
+	int mapy;
+	double sidedistx;
+	double sidedisty;
+	double deltadistx;
+	double deltadisty;
+	int stepx;
+	int stepy;
+	int hit;
+	int side;
+	double perpwalldist;
+	int lineheight;
+	int drawstart;
+	int drawend;
+	int x;
+}	t_ray;
 
 typedef struct	s_vars
 {
@@ -40,6 +68,7 @@ typedef struct	s_vars
 	double rot_speed;
 	int res_len;
 	int res_high;
+	t_ray raycast;
 }		t_vars;
 
 void    my_mlx_pixel_put(t_vars *data, int x, int y, int color)
@@ -241,99 +270,8 @@ int	print_key(int keycode)
 	return (0);
 }
 
-typedef struct s_ray
+t_ray draw_screen(t_ray raycast, t_vars vars)
 {
-	double posx;
-	double posy;
-	double dirx;
-	double diry;
-	double planx;
-	double plany;
-	double raydirx;
-	double raydiry;
-	double camerax;
-	int mapx;
-	int mapy;
-	double sidedistx;
-	double sidedisty;
-	double deltadistx;
-	double deltadisty;
-	int stepx;
-	int stepy;
-	int hit;
-	int side;
-	double perpwalldist;
-	int lineheight;
-	int drawstart;
-	int drawend;
-	int x;
-}	t_ray;
-
-int main(int argc, char **argv)
-{
-	char *path;
-	int nb;
-	t_vars vars;
-	t_params params;
-	t_ray raycast;
-	int x;
-	int y;
-//	int rgb;
-
-	x = 5;
-	y = 5;
-	nb = argc;
-	path = ft_strdup(argv[1]);
-	printf("\n\n\n\n\n");
-	params = parsing(path);
-	printf("ok après parse");
-	vars.map = params.map;
-	vars.speed = 1;
-	vars.angle = 0;
-	vars.rot_speed = 0.02;
-
-	vars.res_high = params.res_len;
-	vars.res_len = params.res_high;
-	vars.char_x = params.player_x;
-	vars.char_y = params.player_y;
-	///////////////////////////////////////
-	raycast.posx = (int)vars.char_x;
-	raycast.posy = (int)vars.char_y;
-	printf("coucou");
-	raycast.dirx = params.dirx;
-	raycast.diry = params.diry;
-	/*if (params.dir == 'W')
-	{
-		raycast.dirx = 1;
-		raycast.diry = 0;
-	}
-	else if (params.dir == 'N')
-	{
-		raycast.dirx = 0;
-		raycast.diry = 1;
-	}
-	else if (params.dir == 'E')
-	{
-		raycast.dirx = -1;
-		raycast.diry = 0;
-	}
-	else
-	{
-		raycast.dirx = 0;
-		raycast.diry = -1;
-	}*/
-	printf("coucou");
-	raycast.dirx = 1;
-	raycast.diry = 0;
-	printf("directions: %f & %f", raycast.dirx, raycast.diry);
-	raycast.planx = 0;
-	raycast.plany = 0.66;
-	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, vars.res_len, vars.res_high, "cub3d - dpoinsu");
-	vars.img = mlx_new_image(vars.mlx, vars.res_len, vars.res_high);
-	vars.addr = mlx_get_data_addr(vars.img, &vars.bits_per_pixel, &vars.line_length, &vars.endian);
-	//draw_map(&vars);
-
 	while (raycast.x < vars.res_len)
 	{
 		raycast.camerax = 2 * raycast.x / (double)vars.res_len - 1;
@@ -407,9 +345,70 @@ int main(int argc, char **argv)
 			color = color / 2;
 		draw_line(raycast.x, raycast.drawstart, raycast.drawend, &vars, color);
 	}
+	return (raycast);
+}
+
+int main(int argc, char **argv)
+{
+	char *path;
+	int nb;
+	t_vars vars;
+	t_params params;
+	int x;
+	int y;
+//	int rgb;
+
+	x = 5;
+	y = 5;
+	nb = argc;
+	path = ft_strdup(argv[1]);
+	params = parsing(path);
+	vars.map = params.map;
+	vars.speed = 1;
+	vars.angle = 0;
+	vars.rot_speed = 0.02;
+
+	vars.res_high = params.res_len;
+	vars.res_len = params.res_high;
+	vars.char_x = params.player_x;
+	vars.char_y = params.player_y;
+	///////////////////////////////////////
+	vars.raycast.posx = (int)vars.char_x;
+	vars.raycast.posy = (int)vars.char_y;
+	vars.raycast.dirx = 1;
+	vars.raycast.diry = 0;
+	printf("!!! : %d\n", (int)vars.raycast.posx);
+	/*if (params.dir == 'W')
+	{
+		raycast.dirx = 1;
+		raycast.diry = 0;
+	}
+	else if (params.dir == 'N')
+	{
+		raycast.dirx = 0;
+		raycast.diry = 1;
+	}
+	else if (params.dir == 'E')
+	{
+		raycast.dirx = -1;
+		raycast.diry = 0;
+	}
+	else
+	{
+		raycast.dirx = 0;
+		raycast.diry = -1;
+	}*/
+	vars.raycast.planx = 0;
+	vars.raycast.plany = 0.66;
+	vars.raycast = draw_screen(vars.raycast, vars);
+	vars.mlx = mlx_init();
+	vars.win = mlx_new_window(vars.mlx, vars.res_len, vars.res_high, "cub3d - dpoinsu");
+	vars.img = mlx_new_image(vars.mlx, vars.res_len, vars.res_high);
+	vars.addr = mlx_get_data_addr(vars.img, &vars.bits_per_pixel, &vars.line_length, &vars.endian);
+	//draw_map(&vars);
 	///////////////////////////////////////
 	mlx_put_image_to_window(vars.mlx, vars.win, vars.img, 0, 0);
-	//mlx_key_hook(vars.win, key_hook, &vars);
+	mlx_key_hook(vars.win, key_hook, &vars);
 	mlx_loop(vars.mlx);
 	return (0);
 }
