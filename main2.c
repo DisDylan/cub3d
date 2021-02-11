@@ -70,16 +70,18 @@ typedef struct	s_vars
 	int res_high;
 	t_ray raycast;
 }		t_vars;
-/*
+
 void    my_mlx_pixel_put(t_vars *data, int x, int y, int color)
 {
-        char *dst;
+    int *dst;
 
-		printf("!!! : %d, %d, %d\n", x, y, color);
-        dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-        *(unsigned int*)dst = color;
+	printf("ok!!\n");
+    dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	printf("ok!!\n");
+	dst[0] = color;
+	printf("ok!!!\n");
 }
-*/
+
 int	closing(t_vars *vars)
 {
 	mlx_destroy_window(vars->mlx, vars->win);
@@ -107,7 +109,6 @@ int	get_b(int rgb)
 	return (rgb & 0xFF);
 }
 */
-/*
 int	draw_rect(int x, int y, t_vars *vars, int color)
 {
 	int i;
@@ -135,18 +136,17 @@ int	draw_rect(int x, int y, t_vars *vars, int color)
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img, 0, 0);
 	return (0);
 }
-*/
 
 int	draw_line(int x, int drawstart, int drawend, t_vars *vars, int color)
 {
 	while (drawstart <= drawend)
 	{
-		vars->addr = drawstart * vars->line_length / 4 + x;
+		my_mlx_pixel_put(vars, x, drawstart, color);
 		drawstart++;
 	}
 	return (0);
 }
-/*
+
 int	draw_map(t_vars *vars)
 {
 	int i;
@@ -173,7 +173,7 @@ int	draw_map(t_vars *vars)
 	}
 	return (0);
 }
-*/
+
 void	move_player(t_vars *vars, int move)
 {
 	double tmpx;
@@ -237,7 +237,7 @@ void	draw_angle(t_vars *vars)
 	while (len < 20)
 	{
 		//draw_rect((vars->res_len - 100) + len, (vars->res_high - 50) + len, vars, 0X00FF000000);
-//		my_mlx_pixel_put(vars, ((vars->res_len - 100) + len), ((vars->res_high - 50) + len), 0x00FF0000);
+		my_mlx_pixel_put(vars, ((vars->res_len - 100) + len), ((vars->res_high - 50) + len), 0x00FF0000);
 		len++;
 		vars->angle += vars->rot_speed;
 	}
@@ -405,7 +405,7 @@ int main(int argc, char **argv)
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, vars.res_len, vars.res_high, "cub3d - dpoinsu");
 	vars.img = mlx_new_image(vars.mlx, vars.res_len, vars.res_high);
-	//vars.addr = mlx_get_data_addr(vars.img, &vars.bits_per_pixel, &vars.line_length, &vars.endian);
+	vars.addr = (int *)mlx_get_data_addr(vars.img, &vars.bits_per_pixel, &vars.line_length, &vars.endian);
 	//draw_map(&vars);
 	///////////////////////////////////////
 	mlx_put_image_to_window(vars.mlx, vars.win, vars.img, 0, 0);
