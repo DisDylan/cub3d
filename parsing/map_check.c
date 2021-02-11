@@ -6,7 +6,7 @@
 /*   By: dpoinsu <dpoinsu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 10:57:26 by dpoinsu           #+#    #+#             */
-/*   Updated: 2021/02/11 11:54:55 by dpoinsu          ###   ########.fr       */
+/*   Updated: 2021/02/11 12:33:44 by dpoinsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int		check_map(t_params *params)
 			check_line(params->map, i, params);
 		i++;
 	}
-	printf("les checks ok\n");
 	if (params->map_error != NULL)
 		return (0);
 	return (1);

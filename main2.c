@@ -6,7 +6,7 @@
 /*   By: dpoinsu <dpoinsu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 09:21:05 by dpoinsu           #+#    #+#             */
-/*   Updated: 2021/02/11 12:25:36 by dpoinsu          ###   ########.fr       */
+/*   Updated: 2021/02/11 12:33:03 by dpoinsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,12 @@ void    my_mlx_pixel_put(t_vars *data, int x, int y, int color)
 {
         char *dst;
 
+		printf("!!!ok\n");
+
         dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
         *(unsigned int*)dst = color;
+		printf("aaaaaaaa\n");
+		
 }
 
 int	closing(t_vars *vars)
@@ -138,6 +142,7 @@ int	draw_line(int x, int drawstart, int drawend, t_vars *vars, int color)
 {
 	while (drawstart <= drawend)
 	{
+		printf("ok!!\n");
 		my_mlx_pixel_put(vars, x, drawstart, color);
 		drawstart++;
 	}
@@ -270,82 +275,82 @@ int	print_key(int keycode)
 	return (0);
 }
 
-t_ray draw_screen(t_ray raycast, t_vars vars)
+void draw_screen(t_vars *vars)
 {
-	while (raycast.x < vars.res_len)
+	while (vars->raycast.x < vars->res_len)
 	{
-		raycast.camerax = 2 * raycast.x / (double)vars.res_len - 1;
-		raycast.raydirx = raycast.dirx + raycast.planx * raycast.camerax;
-		raycast.raydiry = raycast.diry + raycast.plany * raycast.camerax;
-		raycast.mapx = (int)raycast.posx;
-		raycast.mapy = (int)raycast.posy;
-		raycast.deltadistx = sqrt(1 + (raycast.raydiry * raycast.raydiry) / (raycast.raydirx * raycast.raydirx));
-		raycast.deltadisty = sqrt(1 + (raycast.raydirx * raycast.raydirx) / (raycast.raydiry * raycast.raydiry));
-		//raycast.deltadistx = fabs(1 / raycast.raydirx);
-		//raycast.deltadisty = fabs(1 / raycast.raydiry);
-		raycast.hit = 0;
-		if (raycast.raydirx < 0)
+		vars->raycast.camerax = 2 * vars->raycast.x / (double)vars->res_len - 1;
+		vars->raycast.raydirx = vars->raycast.dirx + vars->raycast.planx * vars->raycast.camerax;
+		vars->raycast.raydiry = vars->raycast.diry + vars->raycast.plany * vars->raycast.camerax;
+		vars->raycast.mapx = (int)vars->raycast.posx;
+		vars->raycast.mapy = (int)vars->raycast.posy;
+		vars->raycast.deltadistx = sqrt(1 + (vars->raycast.raydiry * vars->raycast.raydiry) / (vars->raycast.raydirx * vars->raycast.raydirx));
+		vars->raycast.deltadisty = sqrt(1 + (vars->raycast.raydirx * vars->raycast.raydirx) / (vars->raycast.raydiry * vars->raycast.raydiry));
+		//vars->raycast.deltadistx = fabs(1 / vars->raycast.raydirx);
+		//vars->raycast.deltadisty = fabs(1 / vars->raycast.raydiry);
+		vars->raycast.hit = 0;
+		if (vars->raycast.raydirx < 0)
 		{
-			raycast.stepx = -1;
-			raycast.sidedistx = (raycast.posx - raycast.mapx) * raycast.deltadistx;
+			vars->raycast.stepx = -1;
+			vars->raycast.sidedistx = (vars->raycast.posx - vars->raycast.mapx) * vars->raycast.deltadistx;
 		}
 		else
 		{
-			raycast.stepx = 1;
-			raycast.sidedistx = (raycast.mapx + 1.0 - raycast.posx) * raycast.deltadistx;
+			vars->raycast.stepx = 1;
+			vars->raycast.sidedistx = (vars->raycast.mapx + 1.0 - vars->raycast.posx) * vars->raycast.deltadistx;
 		}
-		if (raycast.raydiry < 0)
+		if (vars->raycast.raydiry < 0)
 		{
-			raycast.stepy = -1;
-			raycast.sidedisty = (raycast.posy - raycast.mapy) * raycast.deltadisty;
+			vars->raycast.stepy = -1;
+			vars->raycast.sidedisty = (vars->raycast.posy - vars->raycast.mapy) * vars->raycast.deltadisty;
 		}
 		else
 		{
-			raycast.stepy = 1;
-			raycast.sidedisty = (raycast.mapy + 1.0 - raycast.posy) * raycast.deltadisty;
+			vars->raycast.stepy = 1;
+			vars->raycast.sidedisty = (vars->raycast.mapy + 1.0 - vars->raycast.posy) * vars->raycast.deltadisty;
 		}
-		while (raycast.hit == 0)
+		while (vars->raycast.hit == 0)
 		{
-			if (raycast.sidedistx < raycast.sidedisty)
+			if (vars->raycast.sidedistx < vars->raycast.sidedisty)
 			{
-				raycast.sidedistx += raycast.deltadistx;
-				raycast.mapx += raycast.stepx;
-				raycast.side = 0;
+				vars->raycast.sidedistx += vars->raycast.deltadistx;
+				vars->raycast.mapx += vars->raycast.stepx;
+				vars->raycast.side = 0;
 			}
 			else
 			{
-				raycast.sidedisty += raycast.deltadisty;
-				raycast.mapy += raycast.stepy;
-				raycast.side = 1;
+				vars->raycast.sidedisty += vars->raycast.deltadisty;
+				vars->raycast.mapy += vars->raycast.stepy;
+				vars->raycast.side = 1;
 			}
-			if (vars.map[raycast.mapx][raycast.mapy] != '0')
-				raycast.hit = 1;
+			if (vars->map[vars->raycast.mapx][vars->raycast.mapy] != '0')
+				vars->raycast.hit = 1;
 		}
-		if (raycast.side == 0)
-			raycast.perpwalldist = (raycast.mapx - raycast.posx + (1 - raycast.stepx) / 2) / raycast.raydirx;
+		if (vars->raycast.side == 0)
+			vars->raycast.perpwalldist = (vars->raycast.mapx - vars->raycast.posx + (1 - vars->raycast.stepx) / 2) / vars->raycast.raydirx;
 		else
-			raycast.perpwalldist = (raycast.mapy - raycast.posy + (1 - raycast.stepy) / 2) / raycast.raydiry;
-		raycast.lineheight = (int)(vars.res_high / raycast.perpwalldist);
-		raycast.drawstart = (raycast.lineheight * -1) / 2 + vars.res_high / 2;
-		printf("drawstart: %d\n", raycast.drawstart);
-		if (raycast.drawstart < 0 )
-			raycast.drawstart = 0;
-		raycast.drawend = raycast.lineheight / 2 + vars.res_high / 2;
-		if (raycast.drawend >= vars.res_high)
-			raycast.drawend = vars.res_high - 1;
-		raycast.x += 1;
+			vars->raycast.perpwalldist = (vars->raycast.mapy - vars->raycast.posy + (1 - vars->raycast.stepy) / 2) / vars->raycast.raydiry;
+		vars->raycast.lineheight = (int)(vars->res_high / vars->raycast.perpwalldist);
+		vars->raycast.drawstart = (vars->raycast.lineheight * -1) / 2 + vars->res_high / 2;
+		printf("drawstart: %d\n", vars->raycast.drawstart);
+		if (vars->raycast.drawstart < 0 )
+			vars->raycast.drawstart = 0;
+		vars->raycast.drawend = vars->raycast.lineheight / 2 + vars->res_high / 2;
+		if (vars->raycast.drawend >= vars->res_high)
+			vars->raycast.drawend = vars->res_high - 1;
+		vars->raycast.x += 1;
 		int color;
-		if (vars.map[raycast.mapx][raycast.mapy] == '1')
+		if (vars->map[vars->raycast.mapx][vars->raycast.mapy] == '1')
 			color = 0x00555555;
-		if (vars.map[raycast.mapx][raycast.mapy] == '2')
+		if (vars->map[vars->raycast.mapx][vars->raycast.mapy] == '2')
 			color = 0x00FF0000;
-		if (vars.map[raycast.mapx][raycast.mapy] == '0')
+		if (vars->map[vars->raycast.mapx][vars->raycast.mapy] == '0')
 			color = 0x0000FFFF;
-		if (raycast.side == 1)
+		if (vars->raycast.side == 1)
 			color = color / 2;
-		draw_line(raycast.x, raycast.drawstart, raycast.drawend, &vars, color);
+		draw_line(vars->raycast.x, vars->raycast.drawstart, vars->raycast.drawend, vars, color);
+
 	}
-	return (raycast);
 }
 
 int main(int argc, char **argv)
@@ -377,7 +382,6 @@ int main(int argc, char **argv)
 	vars.raycast.posy = (int)vars.char_y;
 	vars.raycast.dirx = 1;
 	vars.raycast.diry = 0;
-	printf("!!! : %d\n", (int)vars.raycast.posx);
 	/*if (params.dir == 'W')
 	{
 		raycast.dirx = 1;
@@ -400,7 +404,7 @@ int main(int argc, char **argv)
 	}*/
 	vars.raycast.planx = 0;
 	vars.raycast.plany = 0.66;
-	vars.raycast = draw_screen(vars.raycast, vars);
+	draw_screen(&vars);
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, vars.res_len, vars.res_high, "cub3d - dpoinsu");
 	vars.img = mlx_new_image(vars.mlx, vars.res_len, vars.res_high);
