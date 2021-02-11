@@ -1,4 +1,4 @@
-SRCS = parsing/*.c get_next_line/*.c main.c
+SRCS = parsing/*.c get_next_line/*.c main2.c
 
 OBJS = ${SRCS:.c=.o}
 

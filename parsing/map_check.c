@@ -6,7 +6,7 @@
 /*   By: dpoinsu <dpoinsu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 10:57:26 by dpoinsu           #+#    #+#             */
-/*   Updated: 2021/01/25 14:03:58 by dpoinsu          ###   ########.fr       */
+/*   Updated: 2021/02/11 10:15:18 by dpoinsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ void		check_item(char c, t_params *params)
 
 int		check_letter(char c)
 {
-	if (c != ' ' && c != '1' && c != '2' && c != 'N' && c != 'E' &&
+	if (c == 'N' || c == 'E' || c == 'W' || c == 'S')
+		return (2);
+	else if (c != ' ' && c != '1' && c != '2' && c != 'N' && c != 'E' &&
 			c != 'W' && c != 'S')
 		return (1);
 	return(0);
@@ -52,11 +54,29 @@ void		check_line(char **tab, int i, t_params *params)
 					tab[i][j - 1] == ' ' ||
 					tab[i][j + 1] == ' ')
 				params->map_error = ft_strdup("Erreur map");
-		}
-		else if (check_letter(tab[i][j]))
+			if (ft_strlen(tab[i - 1]) <= (size_t)j || ft_strlen(tab[i + 1]) <= (size_t)j)
 				params->map_error = ft_strdup("Erreur map");
+		}
+		else if (check_letter(tab[i][j]) == 1)
+				params->map_error = ft_strdup("Erreur map");
+		else if (check_letter(tab[i][j]) == 2)
+		{
+			printf("ok ici\n");
+			params->player_x = j;
+			params->player_y = i;
+			if (tab[i][j] == 'N')
+				params->diry = 1;
+			else if (tab[i][j] == 'E')
+				params->dirx = -1;
+			else if (tab[i][j] == 'W')
+				params->dirx = 1;
+			else
+				params->diry = -1;
+			printf("ok là\n");
+		}
 		j++;
 	}
+	printf("%d & %d\n", params->diry, params->dirx);
 }
 
 int		check_map(t_params *params)
@@ -81,6 +101,7 @@ int		check_map(t_params *params)
 			check_line(params->map, i, params);
 		i++;
 	}
+	printf("les checks ok\n");
 	if (params->map_error != NULL)
 		return (0);
 	return (1);

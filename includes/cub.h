@@ -6,6 +6,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <limits.h>
+# include <math.h>
 # include "../libft/libft.h"
 # include "../get_next_line/get_next_line.h"
 # include "../mlx_linux/mlx.h"
@@ -40,6 +41,10 @@ typedef struct	s_params
 	char *header_error;
 	char *map_error;
 	char **map;
+	int player_x;
+	int player_y;
+	int dirx;
+	int diry;
 }				t_params;
 
 t_params	parsing(char *path_fd);
