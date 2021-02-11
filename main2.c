@@ -52,7 +52,7 @@ typedef struct s_ray
 typedef struct	s_vars
 {
 	void *img;
-	char *addr;
+	int *addr;
 	int bits_per_pixel;
 	int line_length;
 	int endian;
@@ -70,19 +70,16 @@ typedef struct	s_vars
 	int res_high;
 	t_ray raycast;
 }		t_vars;
-
+/*
 void    my_mlx_pixel_put(t_vars *data, int x, int y, int color)
 {
         char *dst;
 
-		printf("!!!ok\n");
-
+		printf("!!! : %d, %d, %d\n", x, y, color);
         dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
         *(unsigned int*)dst = color;
-		printf("aaaaaaaa\n");
-		
 }
-
+*/
 int	closing(t_vars *vars)
 {
 	mlx_destroy_window(vars->mlx, vars->win);
@@ -110,6 +107,7 @@ int	get_b(int rgb)
 	return (rgb & 0xFF);
 }
 */
+/*
 int	draw_rect(int x, int y, t_vars *vars, int color)
 {
 	int i;
@@ -137,18 +135,18 @@ int	draw_rect(int x, int y, t_vars *vars, int color)
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img, 0, 0);
 	return (0);
 }
+*/
 
 int	draw_line(int x, int drawstart, int drawend, t_vars *vars, int color)
 {
 	while (drawstart <= drawend)
 	{
-		printf("ok!!\n");
-		my_mlx_pixel_put(vars, x, drawstart, color);
+		vars->addr = drawstart * vars->line_length / 4 + x;
 		drawstart++;
 	}
 	return (0);
 }
-
+/*
 int	draw_map(t_vars *vars)
 {
 	int i;
@@ -175,7 +173,7 @@ int	draw_map(t_vars *vars)
 	}
 	return (0);
 }
-
+*/
 void	move_player(t_vars *vars, int move)
 {
 	double tmpx;
@@ -239,7 +237,7 @@ void	draw_angle(t_vars *vars)
 	while (len < 20)
 	{
 		//draw_rect((vars->res_len - 100) + len, (vars->res_high - 50) + len, vars, 0X00FF000000);
-		my_mlx_pixel_put(vars, ((vars->res_len - 100) + len), ((vars->res_high - 50) + len), 0x00FF0000);
+//		my_mlx_pixel_put(vars, ((vars->res_len - 100) + len), ((vars->res_high - 50) + len), 0x00FF0000);
 		len++;
 		vars->angle += vars->rot_speed;
 	}
@@ -332,7 +330,6 @@ void draw_screen(t_vars *vars)
 			vars->raycast.perpwalldist = (vars->raycast.mapy - vars->raycast.posy + (1 - vars->raycast.stepy) / 2) / vars->raycast.raydiry;
 		vars->raycast.lineheight = (int)(vars->res_high / vars->raycast.perpwalldist);
 		vars->raycast.drawstart = (vars->raycast.lineheight * -1) / 2 + vars->res_high / 2;
-		printf("drawstart: %d\n", vars->raycast.drawstart);
 		if (vars->raycast.drawstart < 0 )
 			vars->raycast.drawstart = 0;
 		vars->raycast.drawend = vars->raycast.lineheight / 2 + vars->res_high / 2;
@@ -408,7 +405,7 @@ int main(int argc, char **argv)
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, vars.res_len, vars.res_high, "cub3d - dpoinsu");
 	vars.img = mlx_new_image(vars.mlx, vars.res_len, vars.res_high);
-	vars.addr = mlx_get_data_addr(vars.img, &vars.bits_per_pixel, &vars.line_length, &vars.endian);
+	//vars.addr = mlx_get_data_addr(vars.img, &vars.bits_per_pixel, &vars.line_length, &vars.endian);
 	//draw_map(&vars);
 	///////////////////////////////////////
 	mlx_put_image_to_window(vars.mlx, vars.win, vars.img, 0, 0);
