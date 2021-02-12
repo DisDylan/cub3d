@@ -52,7 +52,7 @@ typedef struct s_ray
 typedef struct	s_vars
 {
 	void *img;
-	int *addr;
+	char *addr;
 	int bits_per_pixel;
 	int line_length;
 	int endian;
@@ -68,18 +68,17 @@ typedef struct	s_vars
 	double rot_speed;
 	int res_len;
 	int res_high;
+	double movespeed;
+	double rotspeed;
 	t_ray raycast;
 }		t_vars;
 
 void    my_mlx_pixel_put(t_vars *data, int x, int y, int color)
 {
-    int *dst;
+    char *dst;
 
-	printf("ok!!\n");
     dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	printf("ok!!\n");
-	dst[0] = color;
-	printf("ok!!!\n");
+	*(unsigned int *)dst = color;
 }
 
 int	closing(t_vars *vars)
@@ -202,7 +201,7 @@ void	move_player(t_vars *vars, int move)
                 vars->char_y += move;
 	}
 }
-
+/*
 void	move_player_y(t_vars *vars, int move)
 {
 	char swap;
@@ -228,6 +227,35 @@ void    move_player_x(t_vars *vars, int move)
 		vars->char_x += move;
         }
 }
+*/
+
+void	move_player_x(t_vars *vars, int move)
+{
+	if (move == 1)
+	{
+		if (vars->map[(int)(vars->raycast.posx + 0.5)][(int)vars->raycast.posy] == '0')
+			vars->raycast.posx += 0.5;
+	}
+	else
+	{
+		if (vars->map[(int)(vars->raycast.posx - 0.5)][(int)vars->raycast.posy] == '0')
+			vars->raycast.posx -= 0.5;
+	}
+}
+
+void	move_player_y(t_vars *vars, int move)
+{
+	if (move == 1)
+	{
+		if (vars->map[(int)vars->raycast.posx][(int)(vars->raycast.posy + 0.5)] == '0')
+			vars->raycast.posy += 0.5;
+	}
+	else
+	{
+		if (vars->map[(int)vars->raycast.posx][(int)(vars->raycast.posy - 0.5)] == '0')
+			vars->raycast.posy -= 0.5;
+	}
+}
 
 void	draw_angle(t_vars *vars)
 {
@@ -241,30 +269,6 @@ void	draw_angle(t_vars *vars)
 		len++;
 		vars->angle += vars->rot_speed;
 	}
-}
-
-int	key_hook(int keycode, t_vars *vars)
-{
-	mlx_destroy_image(vars->mlx, vars->img);
-	vars->img = mlx_new_image(vars->mlx, vars->res_len, vars->res_high);
-	if (keycode == ESCAPE)
-		closing(vars);
-	else if (keycode == KEY_Z)
-		move_player_y(vars, -1);
-	else if (keycode == KEY_Q)
-		move_player_x(vars, -1);
-	else if (keycode == KEY_S)
-		move_player_y(vars, 1);
-	else if (keycode == KEY_D)
-		move_player_x(vars, 1);
-	else if (keycode == ARROW_LEFT)
-		draw_angle(vars);
-	else if (keycode == ARROW_RIGHT)
-		vars->angle -= vars->rot_speed;
-	draw_angle(vars);
-	draw_map(vars);
-	mlx_put_image_to_window(vars->mlx, vars->win, vars->img, 0, 0);
-	return (0);
 }
 
 int	print_key(int keycode)
@@ -282,10 +286,10 @@ void draw_screen(t_vars *vars)
 		vars->raycast.raydiry = vars->raycast.diry + vars->raycast.plany * vars->raycast.camerax;
 		vars->raycast.mapx = (int)vars->raycast.posx;
 		vars->raycast.mapy = (int)vars->raycast.posy;
-		vars->raycast.deltadistx = sqrt(1 + (vars->raycast.raydiry * vars->raycast.raydiry) / (vars->raycast.raydirx * vars->raycast.raydirx));
-		vars->raycast.deltadisty = sqrt(1 + (vars->raycast.raydirx * vars->raycast.raydirx) / (vars->raycast.raydiry * vars->raycast.raydiry));
-		//vars->raycast.deltadistx = fabs(1 / vars->raycast.raydirx);
-		//vars->raycast.deltadisty = fabs(1 / vars->raycast.raydiry);
+		//vars->raycast.deltadistx = sqrt(1 + (vars->raycast.raydiry * vars->raycast.raydiry) / (vars->raycast.raydirx * vars->raycast.raydirx));
+		//vars->raycast.deltadisty = sqrt(1 + (vars->raycast.raydirx * vars->raycast.raydirx) / (vars->raycast.raydiry * vars->raycast.raydiry));
+		vars->raycast.deltadistx = fabs(1 / vars->raycast.raydirx);
+		vars->raycast.deltadisty = fabs(1 / vars->raycast.raydiry);
 		vars->raycast.hit = 0;
 		if (vars->raycast.raydirx < 0)
 		{
@@ -335,7 +339,6 @@ void draw_screen(t_vars *vars)
 		vars->raycast.drawend = vars->raycast.lineheight / 2 + vars->res_high / 2;
 		if (vars->raycast.drawend >= vars->res_high)
 			vars->raycast.drawend = vars->res_high - 1;
-		vars->raycast.x += 1;
 		int color;
 		if (vars->map[vars->raycast.mapx][vars->raycast.mapy] == '1')
 			color = 0x00555555;
@@ -346,8 +349,35 @@ void draw_screen(t_vars *vars)
 		if (vars->raycast.side == 1)
 			color = color / 2;
 		draw_line(vars->raycast.x, vars->raycast.drawstart, vars->raycast.drawend, vars, color);
-
+		vars->raycast.x += 1;
 	}
+}
+
+int	key_hook(int keycode, t_vars *vars)
+{
+	mlx_destroy_image(vars->mlx, vars->img);
+	vars->img = mlx_new_image(vars->mlx, vars->res_len, vars->res_high);
+	if (keycode == ESCAPE)
+		closing(vars);
+	else if (keycode == KEY_Z)
+	{
+		if (vars->map[(int)(vars->raycast.posx + vars->raycast.dirx * vars->movespeed)][(int)vars->raycast.posy] == '0')
+			vars->raycast.posx += vars->raycast.dirx * vars->movespeed;
+		if (vars->map[(int)vars->raycast.posx][(int)(vars->raycast.posy + vars->raycast.diry * vars->movespeed)] == '0')
+			vars->raycast.posy += vars->raycast.diry * vars->movespeed;
+	}
+	else if (keycode == KEY_Q)
+		move_player_y(vars, -1);
+	else if (keycode == KEY_S)
+		move_player_x(vars, -1);
+	else if (keycode == KEY_D)
+		move_player_y(vars, 1);
+	//else if (keycode == ARROW_LEFT)
+	//else if (keycode == ARROW_RIGHT)
+	draw_screen(vars);
+	vars->raycast.x = 0;
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->img, 0, 0);
+	return (0);
 }
 
 int main(int argc, char **argv)
@@ -379,6 +409,8 @@ int main(int argc, char **argv)
 	vars.raycast.posy = (int)vars.char_y;
 	vars.raycast.dirx = 1;
 	vars.raycast.diry = 0;
+	vars.movespeed = 0.2;
+	vars.rotspeed = 0.2;
 	/*if (params.dir == 'W')
 	{
 		raycast.dirx = 1;
@@ -401,11 +433,12 @@ int main(int argc, char **argv)
 	}*/
 	vars.raycast.planx = 0;
 	vars.raycast.plany = 0.66;
-	draw_screen(&vars);
+	//draw_screen(&vars);
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, vars.res_len, vars.res_high, "cub3d - dpoinsu");
 	vars.img = mlx_new_image(vars.mlx, vars.res_len, vars.res_high);
-	vars.addr = (int *)mlx_get_data_addr(vars.img, &vars.bits_per_pixel, &vars.line_length, &vars.endian);
+	vars.addr = mlx_get_data_addr(vars.img, &vars.bits_per_pixel, &vars.line_length, &vars.endian);
+	draw_screen(&vars);
 	//draw_map(&vars);
 	///////////////////////////////////////
 	mlx_put_image_to_window(vars.mlx, vars.win, vars.img, 0, 0);
