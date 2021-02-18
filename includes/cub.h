@@ -43,6 +43,10 @@ typedef struct	s_params
 	char **map;
 	int player_x;
 	int player_y;
+	int direction_x;
+	int direction_y;
+	double plan_x;
+	double plan_y;
 }				t_params;
 
 t_params	parsing(char *path_fd);

@@ -63,6 +63,29 @@ void		check_line(char **tab, int i, t_params *params)
 		{
 			params->player_x = j;
 			params->player_y = i;
+			if (params->direction_x != 0 && params->direction_y != 0)
+				params->map_error = ft_strdup("Erreur map");
+			if (tab[i][j] == 'W')
+			{
+				params->plan_x = -0.66;
+				params->direction_y = -1;
+			}
+			else if (tab[i][j] == 'E')
+			{
+				params->direction_y = 1;
+				params->plan_x = 0.66;
+			}
+			else if (tab[i][j] == 'S')
+			{
+				params->direction_x = 1;
+				params->plan_y = -0.66;
+			}
+			else
+			{
+				params->direction_x = -1;
+				params->plan_y = 0.66;
+			}
+			params->map[i][j] = '0';
 		}
 		j++;
 	}

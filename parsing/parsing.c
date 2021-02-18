@@ -55,6 +55,10 @@ t_params	init_params(void)
 	params.sprite_path = NULL;
 	params.header_error = NULL;
 	params.map_error = 0;
+	params.direction_x = 0;
+	params.direction_y = 0;
+	params.plan_x = 0.0;
+	params.plan_y = 0.0;
 	return (params);
 }	
 

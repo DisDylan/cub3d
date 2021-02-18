@@ -46,6 +46,8 @@ typedef struct s_ray
 	int lineheight;
 	int drawstart;
 	int drawend;
+	double olddirx;
+	double oldplanex;
 	int x;
 }	t_ray;
 
@@ -277,7 +279,7 @@ int	print_key(int keycode)
 	return (0);
 }
 
-void draw_screen(t_vars *vars)
+int draw_screen(t_vars *vars)
 {
 	while (vars->raycast.x < vars->res_len)
 	{
@@ -351,6 +353,8 @@ void draw_screen(t_vars *vars)
 		draw_line(vars->raycast.x, vars->raycast.drawstart, vars->raycast.drawend, vars, color);
 		vars->raycast.x += 1;
 	}
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->img, 0, 0);
+	return (0);
 }
 
 int	key_hook(int keycode, t_vars *vars)
@@ -367,16 +371,47 @@ int	key_hook(int keycode, t_vars *vars)
 			vars->raycast.posy += vars->raycast.diry * vars->movespeed;
 	}
 	else if (keycode == KEY_Q)
-		move_player_y(vars, -1);
+	{
+		if (vars->map[(int)(vars->raycast.posx - vars->raycast.planx * vars->movespeed)][(int)vars->raycast.posy] == '0')
+			vars->raycast.posx -= vars->raycast.planx * vars->movespeed;
+		if (vars->map[(int)vars->raycast.posx][(int)(vars->raycast.posy - vars->raycast.plany * vars->movespeed)] == '0')
+			vars->raycast.posy -= vars->raycast.plany * vars->movespeed;
+	}
 	else if (keycode == KEY_S)
-		move_player_x(vars, -1);
+	{
+		if (vars->map[(int)(vars->raycast.posx - vars->raycast.dirx * vars->movespeed)][(int)vars->raycast.posy] == '0')
+			vars->raycast.posx -= vars->raycast.dirx * vars->movespeed;
+		if (vars->map[(int)vars->raycast.posx][(int)(vars->raycast.posy - vars->raycast.diry * vars->movespeed)] == '0')
+			vars->raycast.posy -= vars->raycast.diry * vars->movespeed;
+	}
 	else if (keycode == KEY_D)
-		move_player_y(vars, 1);
-	//else if (keycode == ARROW_LEFT)
-	//else if (keycode == ARROW_RIGHT)
+	{
+		if (vars->map[(int)(vars->raycast.posx + vars->raycast.planx * vars->movespeed)][(int)vars->raycast.posy] == '0')
+			vars->raycast.posx += vars->raycast.planx * vars->movespeed;
+		if (vars->map[(int)vars->raycast.posx][(int)(vars->raycast.posy + vars->raycast.plany * vars->movespeed)] == '0')
+			vars->raycast.posy += vars->raycast.plany * vars->movespeed;
+	}
+	else if (keycode == ARROW_RIGHT)
+	{
+		vars->raycast.olddirx = vars->raycast.dirx;
+		vars->raycast.dirx = vars->raycast.dirx * cos(-(vars->rotspeed)) - vars->raycast.diry * sin(-(vars->rotspeed));
+		vars->raycast.diry = vars->raycast.olddirx * sin(-(vars->rotspeed)) + vars->raycast.diry * cos(-(vars->rotspeed));
+		vars->raycast.oldplanex = vars->raycast.planx;
+		vars->raycast.planx = vars->raycast.planx * cos(-(vars->rotspeed)) - vars->raycast.plany * sin(-(vars->rotspeed));
+		vars->raycast.plany = vars->raycast.oldplanex * sin(-(vars->rotspeed)) + vars->raycast.plany * cos(-(vars->rotspeed));
+	}
+	else if (keycode == ARROW_LEFT)
+	{
+		vars->raycast.olddirx = vars->raycast.dirx;
+		vars->raycast.dirx = vars->raycast.dirx * cos(vars->rotspeed) - vars->raycast.diry * sin(vars->rotspeed);
+		vars->raycast.diry = vars->raycast.olddirx * sin(vars->rotspeed) + vars->raycast.diry * cos(vars->rotspeed);
+		vars->raycast.oldplanex = vars->raycast.planx;
+		vars->raycast.planx = vars->raycast.planx * cos(vars->rotspeed) - vars->raycast.plany * sin(vars->rotspeed);
+		vars->raycast.plany = vars->raycast.oldplanex * sin(vars->rotspeed) + vars->raycast.plany * cos(vars->rotspeed);
+	}
 	draw_screen(vars);
 	vars->raycast.x = 0;
-	mlx_put_image_to_window(vars->mlx, vars->win, vars->img, 0, 0);
+	//mlx_put_image_to_window(vars->mlx, vars->win, vars->img, 0, 0);
 	return (0);
 }
 
@@ -407,9 +442,9 @@ int main(int argc, char **argv)
 	///////////////////////////////////////
 	vars.raycast.posx = (int)vars.char_x;
 	vars.raycast.posy = (int)vars.char_y;
-	vars.raycast.dirx = 1;
-	vars.raycast.diry = 0;
-	vars.movespeed = 0.2;
+	vars.raycast.dirx = params.direction_x;
+	vars.raycast.diry = params.direction_y;
+	vars.movespeed = 0.3;
 	vars.rotspeed = 0.2;
 	/*if (params.dir == 'W')
 	{
@@ -431,8 +466,8 @@ int main(int argc, char **argv)
 		raycast.dirx = 0;
 		raycast.diry = -1;
 	}*/
-	vars.raycast.planx = 0;
-	vars.raycast.plany = 0.66;
+	vars.raycast.planx = params.plan_x;
+	vars.raycast.plany = params.plan_y;
 	//draw_screen(&vars);
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, vars.res_len, vars.res_high, "cub3d - dpoinsu");
@@ -442,7 +477,16 @@ int main(int argc, char **argv)
 	//draw_map(&vars);
 	///////////////////////////////////////
 	mlx_put_image_to_window(vars.mlx, vars.win, vars.img, 0, 0);
-	mlx_key_hook(vars.win, key_hook, &vars);
+	mlx_loop_hook(vars.win, key_hook, &vars);
+	mlx_put_image_to_window(vars.mlx, vars.win, vars.img, 0, 0);
+	mlx_hook(vars.win, 2, 1L << 0, key_hook, &vars);
+	//mlx_loop_hook(vars.mlx, draw_screen, &vars);
+	//mlx_hook(vars.win, 3, 1L << 1, key_release, &vars);
 	mlx_loop(vars.mlx);
 	return (0);
 }
+
+
+// ROTATION CHANGE EN FONCTION DE LA DIR
+// W & E ok, N & S bug
+// W = map printed à l'envers
