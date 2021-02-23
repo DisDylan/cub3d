@@ -477,8 +477,7 @@ int main(int argc, char **argv)
 	//draw_map(&vars);
 	///////////////////////////////////////
 	mlx_put_image_to_window(vars.mlx, vars.win, vars.img, 0, 0);
-	mlx_loop_hook(vars.win, key_hook, &vars);
-	mlx_put_image_to_window(vars.mlx, vars.win, vars.img, 0, 0);
+	//mlx_loop_hook(vars.win, key_hook, &vars);
 	mlx_hook(vars.win, 2, 1L << 0, key_hook, &vars);
 	//mlx_loop_hook(vars.mlx, draw_screen, &vars);
 	//mlx_hook(vars.win, 3, 1L << 1, key_release, &vars);
