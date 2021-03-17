@@ -15,17 +15,17 @@
 void	ft_verify_errors(t_recup *recup)
 {
 	if (ft_murs(recup) == 1)
-		ft_error(recup, "Map non entouree de 1\n");
+		ft_error(recup, "Map error\n");
 	if (recup->depart == 'x')
-		ft_error(recup, "Pas de joueur\n");
+		ft_error(recup, "NO PLAYER\n");
 	if (recup->indicateur2 != 6)
-		ft_error(recup, "Mauvaises donnees F ou C\n");
+		ft_error(recup, "Error RGB\n");
 	if (recup->multijoueurs == 1)
-		ft_error(recup, "Plus d'un joueur\n");
+		ft_error(recup, "MAP ERROR\n");
 	if (recup->lignevide == 1)
-		ft_error(recup, "Ligne vide dans la map\n");
+		ft_error(recup, "MAP ERROR\n");
 	if (recup->wrongcharmap == 2)
-		ft_error(recup, "Caractere incorrect dans la map\n");
+		ft_error(recup, "MAP ERROR\n");
 }
 
 void	ft_error2(t_recup *recup)
@@ -71,8 +71,6 @@ void	ft_error(t_recup *recup, char *str)
 
 int		ft_exit(t_recup *recup)
 {
-	if (recup->indicateur3 == 0)
-		ft_error(recup, "Non jrigole\n");
 	if (recup->data.img)
 		mlx_destroy_image(recup->data.mlx_ptr, recup->data.img);
 	if (recup->texture[0].img)

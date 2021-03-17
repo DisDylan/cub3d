@@ -42,12 +42,6 @@ typedef struct		s_sprite
 {
 	int				nbspr;
 	int				*order;
-	double			*dist;
-	double			spritex;
-	double			spritey;
-	double			invdet;
-	double			transformx;
-	double			transformy;
 	int				spritescreenx;
 	int				spriteheight;
 	int				drawstartx;
@@ -55,21 +49,29 @@ typedef struct		s_sprite
 	int				drawendy;
 	int				drawendx;
 	int				spritewidth;
+	double			*dist;
+	double			spritex;
+	double			spritey;
+	double			invdet;
+	double			transformx;
+	double			transformy;
 	double			*zbuffer;
 }					t_sprite;
 
 typedef struct		s_texture
 {
 	int				texdir;
-	double			wallx;
 	int				texx;
 	int				texy;
+	double			wallx;
 	double			step;
 	double			texpos;
 }					t_texture;
 
 typedef struct		s_ray
 {
+	int				mapx;
+	int				mapy;
 	double			posx;
 	double			posy;
 	double			dirx;
@@ -79,8 +81,6 @@ typedef struct		s_ray
 	double			raydirx;
 	double			raydiry;
 	double			camerax;
-	int				mapx;
-	int				mapy;
 	double			sidedistx;
 	double			sidedisty;
 	double			deltadistx;
@@ -115,7 +115,6 @@ typedef struct		s_data
 	int				right;
 	int				rotate_left;
 	int				rotate_right;
-	int				minimapechelle;
 	int				width;
 	int				height;
 	void			*img2;
@@ -127,8 +126,8 @@ typedef struct		s_recup
 	int				rx;
 	int				ry;
 	int				i;
-	int				f;
-	int				c;
+	int				*f;
+	int				*c;
 	char			*no;
 	char			*so;
 	char			*we;
@@ -172,7 +171,7 @@ int					ft_murs_util(char *str);
 int					ft_depart(char c, t_recup *recup, int i, int j);
 void				ft_color_resolution(char **str, t_recup *recup);
 int					ft_atoi2(const char *str, t_recup *recup);
-int					ft_atoi3(const char *str, t_recup *recup);
+void				ft_atoi3(const char *str, t_recup *recup);
 void				ft_texture(char *str, t_recup *recup);
 int					ft_path_texture(char *str, char **texture,
 						t_recup *recup, int j);
@@ -205,10 +204,6 @@ void				ft_verify_errors(t_recup *recup);
 void				ft_header(t_recup *recup, int fd);
 void				ft_save(t_recup *recup);
 void				ft_sprite(t_recup *recup);
-int					ft_minimap(t_recup *recup);
-void				my_color_cube(t_data *data, int x, int y, int color);
-void				my_color_perso(t_data *data, int x, int y, int color);
-void				ft_hitpoints(t_recup *recup);
 void				ft_init_more(t_recup *recup);
 int					get_next_line(int fd, char **line, t_recup *recup);
 int					ft_strlen(char *str);

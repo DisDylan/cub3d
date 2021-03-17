@@ -27,11 +27,7 @@ int		ft_key_press(int keycode, t_recup *recup)
 	else if (keycode == ROTATE_RIGHT)
 		recup->data.rotate_right = 1;
 	else if (keycode == ECHAP)
-	{
-		mlx_destroy_window(recup->data.mlx_ptr, recup->data.mlx_win);
-		exit(0);
-	}
-	printf("%d\n", keycode);
+		ft_exit(recup);
 	return (1);
 }
 

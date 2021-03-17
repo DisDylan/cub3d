@@ -36,23 +36,23 @@ void	ft_get_texture(t_recup *recup)
 	if (!(recup->texture[0].img = mlx_xpm_file_to_image(recup->data.mlx_ptr,
 					recup->no, &(recup->texture[0].width),
 					&(recup->texture[0].height))))
-		ft_error(recup, "Texture SO\n");
+		ft_error(recup, "Erreur texture\n");
 	if (!(recup->texture[1].img = mlx_xpm_file_to_image(recup->data.mlx_ptr,
 					recup->so, &(recup->texture[1].width),
 					&(recup->texture[1].height))))
-		ft_error(recup, "Texture NO\n");
+		ft_error(recup, "Erreur texture\n");
 	if (!(recup->texture[2].img = mlx_xpm_file_to_image(recup->data.mlx_ptr,
 					recup->we, &(recup->texture[2].width),
 					&(recup->texture[2].height))))
-		ft_error(recup, "Texture EA\n");
+		ft_error(recup, "Erreur texture\n");
 	if (!(recup->texture[3].img = mlx_xpm_file_to_image(recup->data.mlx_ptr,
 					recup->ea, &(recup->texture[3].width),
 					&(recup->texture[3].height))))
-		ft_error(recup, "Texture WE\n");
+		ft_error(recup, "Erreur texture\n");
 	if (!(recup->texture[4].img = mlx_xpm_file_to_image(recup->data.mlx_ptr,
 					recup->sp, &(recup->texture[4].width),
 					&(recup->texture[4].height))))
-		ft_error(recup, "Texture S\n");
+		ft_error(recup, "Erreur texture\n");
 	ft_get_texture_adress(recup);
 }
 
@@ -83,7 +83,7 @@ int		ft_mlx(t_recup *recup)
 {
 	ft_initialisation2(recup);
 	if (!(recup->data.mlx_ptr = mlx_init()))
-		ft_error(recup, "Mlx init impossible\n");
+		ft_error(recup, "init mlx failes\n");
 	mlx_get_screen_size(recup->data.mlx_ptr, &recup->screenx, &recup->screeny);
 	recup->rx = (recup->rx > recup->screenx) ? recup->screenx : recup->rx;
 	recup->ry = (recup->ry > recup->screeny) ? recup->screeny : recup->ry;
@@ -94,7 +94,7 @@ int		ft_mlx(t_recup *recup)
 	if (recup->save == 1)
 		ft_raycasting(recup);
 	recup->data.mlx_win = mlx_new_window(recup->data.mlx_ptr, recup->rx,
-			recup->ry, "Hello world!");
+			recup->ry, "Cub3D - dpoinsu");
 	recup->data.img2 = mlx_new_image(recup->data.mlx_ptr, recup->rx, recup->ry);
 	recup->data.addr2 = (int *)mlx_get_data_addr(recup->data.img2, &recup->
 			data.bits_per_pixel, &recup->data.line_length, &recup->data.endian);
