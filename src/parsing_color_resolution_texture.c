@@ -47,7 +47,7 @@ int		ft_atoi3(const char *str, t_recup *recup)
 		recup->erreur = 2;
 	ft_atoi3_check(str, recup);
 	while (str[recup->i] == ' ' || str[recup->i] == '\t' || str[recup->i]
-			== ',' || str[recup->i] == '\n' || str[recup->i] == '\r'
+			== ',' || str[recup->i] == '\r'
 			|| str[recup->i] == '\v' || str[recup->i] == '\f')
 	{
 		recup->i++;

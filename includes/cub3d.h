@@ -32,41 +32,26 @@
 # define ECHAP		65307
 # define BUFFER_SIZE	4096
 
-typedef struct		s_sprxy
+typedef struct		s_data
 {
-	double			x;
-	double			y;
-}					t_sprxy;
-
-typedef struct		s_sprite
-{
-	int				nbspr;
-	int				*order;
-	int				spritescreenx;
-	int				spriteheight;
-	int				drawstartx;
-	int				drawstarty;
-	int				drawendy;
-	int				drawendx;
-	int				spritewidth;
-	double			*dist;
-	double			spritex;
-	double			spritey;
-	double			invdet;
-	double			transformx;
-	double			transformy;
-	double			*zbuffer;
-}					t_sprite;
-
-typedef struct		s_texture
-{
-	int				texdir;
-	int				texx;
-	int				texy;
-	double			wallx;
-	double			step;
-	double			texpos;
-}					t_texture;
+	void			*mlx_ptr;
+	void			*mlx_win;
+	void			*img;
+	int				*addr;
+	int				bits_per_pixel;
+	int				line_length;
+	int				endian;
+	int				forward;
+	int				back;
+	int				left;
+	int				right;
+	int				rotate_left;
+	int				rotate_right;
+	int				width;
+	int				height;
+	void			*img2;
+	int				*addr2;
+}					t_data;
 
 typedef struct		s_ray
 {
@@ -100,34 +85,49 @@ typedef struct		s_ray
 	int				texture;
 }					t_ray;
 
-typedef struct		s_data
+typedef struct		s_sprite
 {
-	void			*mlx_ptr;
-	void			*mlx_win;
-	void			*img;
-	int				*addr;
-	int				bits_per_pixel;
-	int				line_length;
-	int				endian;
-	int				forward;
-	int				back;
-	int				left;
-	int				right;
-	int				rotate_left;
-	int				rotate_right;
-	int				width;
-	int				height;
-	void			*img2;
-	int				*addr2;
-}					t_data;
+	int				nbspr;
+	int				*order;
+	int				spritescreenx;
+	int				spriteheight;
+	int				drawstartx;
+	int				drawstarty;
+	int				drawendy;
+	int				drawendx;
+	int				spritewidth;
+	double			*dist;
+	double			spritex;
+	double			spritey;
+	double			invdet;
+	double			transformx;
+	double			transformy;
+	double			*zbuffer;
+}					t_sprite;
+
+typedef struct		s_sprxy
+{
+	double			x;
+	double			y;
+}					t_sprxy;
+
+typedef struct		s_texture
+{
+	int				texdir;
+	int				texx;
+	int				texy;
+	double			wallx;
+	double			step;
+	double			texpos;
+}					t_texture;
 
 typedef struct		s_recup
 {
 	int				rx;
 	int				ry;
 	int				i;
-	int				*f;
-	int				*c;
+	int				f;
+	int				c;
 	char			*no;
 	char			*so;
 	char			*we;
@@ -171,7 +171,7 @@ int					ft_murs_util(char *str);
 int					ft_depart(char c, t_recup *recup, int i, int j);
 void				ft_color_resolution(char **str, t_recup *recup);
 int					ft_atoi2(const char *str, t_recup *recup);
-void				ft_atoi3(const char *str, t_recup *recup);
+int					ft_atoi3(const char *str, t_recup *recup);
 void				ft_texture(char *str, t_recup *recup);
 int					ft_path_texture(char *str, char **texture,
 						t_recup *recup, int j);

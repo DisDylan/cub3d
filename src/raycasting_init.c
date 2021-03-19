@@ -42,7 +42,7 @@ void	ft_initialisation3(t_recup *recup)
 						recup->ray.camerax;
 	recup->ray.mapx = (int)recup->ray.posx;
 	recup->ray.mapy = (int)recup->ray.posy;
-	recup->ray.movespeed = 0.1;
+	recup->ray.movespeed = 0.05;
 	recup->ray.rotspeed = 0.033 * 1.8;
 	ft_init_more3(recup);
 }

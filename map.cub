@@ -1,15 +1,12 @@
-R 1600 960
-
+R 4000000 4000000
 NO ./textures/bookshelf.xpm
 SO ./textures/bricks.xpm
 EA ./textures/grass.xpm
 WE ./textures/stone.xpm
+
 S ./textures/vampire.xpm
-
 C 0, 0, 255
-
 F 255, 0, 0
-
 
 
          111111111111
