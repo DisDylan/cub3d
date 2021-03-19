@@ -1,60 +1,38 @@
-SRC =	parsing.c \
-		parsing_color_resolution_texture.c \
-		parsing_map.c \
-		parsing_utils.c \
-		keys_draw.c \
-		raycasting_init.c \
-		raycasting_utils.c \
-		raycasting_move.c \
-		raycasting.c \
-		sprites.c \
-		errors.c \
-		save.c \
-		get_next_line.c \
-		get_next_line_utils.c \
-		init.c
+SRCS = src/*.c
 
-NAME = Cub3D
+OBJS = ${SRCS:.c=.o}
 
-MLX_DIR = minilibx-linux
-MLX = libmlx.a 
+INCLUDES = includes/cub.h
+
+NAME = cub3d
+
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 
-OBJ_DIR = obj
-SRC_DIR = src
-INC_DIR = includes
+RM = rm -f
 
-OBJ = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
-DPD = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.d))
+CFLAGS = -Wall -Wextra -Werror
 
 .c.o:
-	${CC} ${CFLAGS} -c$< -o ${<:.c=.o}
+	${CC} ${CFLAGS} -c $< -o ${<:.c=.o} -I ${INCLUDES}
 
-all:
-	@$(MAKE) -j $(NAME)
+all:	
+	${MAKE} -C ./libft
+	${CC} ${CFLAGS} -o cub3d ${SRCS} -Llibft -lft -Lmlx_linux -lmlx_Linux -lXext -lX11 -lm -lz
 
-$(NAME): $(OBJ)
-		${CC} $(CFLAGS) -o $(NAME) $(OBJ) -L $(MLX_DIR) -lmlx -lm -lbsd -lX11 -lXext
-		@echo $(NAME) : Created !
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | .gitignore
-		@mkdir -p $(OBJ_DIR)
-		${CC} $(CFLAGS) -I $(INC_DIR) -I $(MLX_DIR) -c $< -o $@
-
-.gitignore:
-		@echo $(NAME) > .gitignore
+${NAME}: ${OBJS}
+		all
 
 clean:
-	@rm -rf $(OBJ_DIR)
-	@echo "obj deleted"
+	${MAKE} clean -C ./libft
+	${RM} ${OBJS}
 
 fclean:	clean
-	@rm -rf $(NAME)
-	@echo "[$(NAME)]: deleted"
+	${MAKE} fclean -C ./libft
+	${RM} ${NAME}
+	${RM} libft.a
 
-re: fclean all
+re:	fclean all
 
-.PHONY: all, clean, fclean, re
-
--include $(DPD)
+test:
+	${CC} ${CFLAGS} -o cub3d ${SRCS} -L. -lft -Lmlx_linux -lmlx_Linux -lXext -lX11 -lm -lz
+	./cub3d map.cub
