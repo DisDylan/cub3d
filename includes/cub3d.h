@@ -161,6 +161,8 @@ typedef struct		s_recup
 	t_sprxy			*sxy;
 }					t_recup;
 
+int					trgb(int t, int r, int g, int b);
+int					ft_nbr_tobase(unsigned long long nbr, char *base);
 int					ft_cub(char *str, t_recup *recup);
 void				ft_parsing(char *fichier, t_recup *recup);
 int					ft_parsing_map(char *fichier, t_recup *recup);

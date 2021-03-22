@@ -1,8 +1,10 @@
-SRCS = src/*.c
+SRCS = src/errors.c src/get_next_line_utils.c src/get_next_line.c src/init.c src/keys_draw.c src/parsing_color_resolution_texture.c src/parsing_map.c src/parsing_utils.c src/raycasting_init.c src/raycasting_move.c src/raycasting_utils.c src/raycasting.c src/save.c src/sprites.c src/main.c
 
 OBJS = ${SRCS:.c=.o}
 
 INCLUDES = includes/cub.h
+
+LIBS = -Lmlx_linux -lmlx_Linux -lXext -lX11 -lm -lz
 
 NAME = cub3d
 
@@ -15,24 +17,22 @@ CFLAGS = -Wall -Wextra -Werror
 .c.o:
 	${CC} ${CFLAGS} -c $< -o ${<:.c=.o} -I ${INCLUDES}
 
-all:	
-	${MAKE} -C ./libft
-	${CC} ${CFLAGS} -o cub3d ${SRCS} -Llibft -lft -Lmlx_linux -lmlx_Linux -lXext -lX11 -lm -lz
-
 ${NAME}: ${OBJS}
-		all
+	${CC} ${CFLAGS} -o ${NAME} ${OBJS} ${LIBS}
+
+all:	${NAME}
 
 clean:
-	${MAKE} clean -C ./libft
 	${RM} ${OBJS}
 
 fclean:	clean
-	${MAKE} fclean -C ./libft
 	${RM} ${NAME}
-	${RM} libft.a
 
 re:	fclean all
 
 test:
-	${CC} ${CFLAGS} -o cub3d ${SRCS} -L. -lft -Lmlx_linux -lmlx_Linux -lXext -lX11 -lm -lz
+	${CC} ${CFLAGS} -o cub3d ${SRCS} ${LIBS}
 	./cub3d map.cub
+
+test2:
+	${CC} ${CFLAGS} -o cub3d ${SRCS} ${LIBS}

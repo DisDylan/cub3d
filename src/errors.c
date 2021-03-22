@@ -18,8 +18,6 @@ void	ft_verify_errors(t_recup *recup)
 		ft_error(recup, "Map error\n");
 	if (recup->depart == 'x')
 		ft_error(recup, "NO PLAYER\n");
-	if (recup->indicateur2 != 6)
-		ft_error(recup, "Error RGB\n");
 	if (recup->multijoueurs == 1)
 		ft_error(recup, "MAP ERROR\n");
 	if (recup->lignevide == 1)

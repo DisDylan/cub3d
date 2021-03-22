@@ -73,7 +73,7 @@ void	ft_init_sprite(t_recup *recup)
 
 	i = -1;
 	recup->s.nbspr = 0;
-	ft_verify_errors(recup);
+	//ft_verify_errors(recup);
 	while (++i < recup->nblines)
 	{
 		j = -1;

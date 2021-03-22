@@ -43,6 +43,7 @@ int		ft_atoi3(const char *str, t_recup *recup)
 	int		verify;
 
 	verify = 0;
+	recup->sum = 0;
 	if (str[1] != ' ')
 		recup->erreur = 2;
 	ft_atoi3_check(str, recup);
@@ -52,8 +53,6 @@ int		ft_atoi3(const char *str, t_recup *recup)
 	{
 		recup->i++;
 		verify = 0;
-		if (str[recup->i] >= '0' && str[recup->i] <= '9')
-			recup->indicateur2++;
 		while (str[recup->i] >= '0' && str[recup->i] <= '9')
 		{
 			verify = (verify * 10) + str[recup->i] - 48;
@@ -141,7 +140,7 @@ void	ft_color_resolution(char **str, t_recup *recup)
 			recup->erreur = 2;
 	}
 	else if (*str[i] == 'F')
-		recup->f = ft_atoi3(*str, recup);
+		recup->f = get_rgb(*str[i]);
 	else if (*str[i] == 'C')
-		recup->c = ft_atoi3(*str, recup);
+		recup->c = get_rgb(*str[i]);
 }
