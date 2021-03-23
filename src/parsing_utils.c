@@ -80,8 +80,6 @@ void	ft_initialisation(t_recup *recup)
 	recup->we = NULL;
 	recup->ea = NULL;
 	recup->sp = NULL;
-	recup->f = -1;
-	recup->c = -1;
 	recup->rx = 0;
 	recup->ry = 0;
 	recup->nblines = 0;

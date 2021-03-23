@@ -161,6 +161,11 @@ typedef struct		s_recup
 	t_sprxy			*sxy;
 }					t_recup;
 
+int					ft_atoi(const char *str);
+int					get_rgb(char *str, t_recup *recup);
+int					put_int_rgb(char *str, t_recup *recup);
+char				*ft_itoa(int n);
+int					ft_isdigit(int c);
 int					trgb(int t, int r, int g, int b);
 int					ft_nbr_tobase(unsigned long long nbr, char *base);
 int					ft_cub(char *str, t_recup *recup);

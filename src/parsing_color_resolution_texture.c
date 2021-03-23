@@ -140,7 +140,8 @@ void	ft_color_resolution(char **str, t_recup *recup)
 			recup->erreur = 2;
 	}
 	else if (*str[i] == 'F')
-		recup->f = get_rgb(*str[i]);
+		recup->f = get_rgb(*str, recup);
 	else if (*str[i] == 'C')
-		recup->c = get_rgb(*str[i]);
+		recup->c = get_rgb(*str, recup);
+    printf("%s\n", *str);
 }

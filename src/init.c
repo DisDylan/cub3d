@@ -29,6 +29,8 @@ void	ft_init_more(t_recup *recup)
 	recup->s.dist = NULL;
 	recup->s.zbuffer = NULL;
 	recup->sxy = NULL;
+	recup->f = -1;
+	recup->c = -1;
 }
 
 void	ft_init_dir(t_recup *recup)

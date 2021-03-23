@@ -1,4 +1,4 @@
-SRCS = src/errors.c src/get_next_line_utils.c src/get_next_line.c src/init.c src/keys_draw.c src/parsing_color_resolution_texture.c src/parsing_map.c src/parsing_utils.c src/raycasting_init.c src/raycasting_move.c src/raycasting_utils.c src/raycasting.c src/save.c src/sprites.c src/main.c
+SRCS = src/errors.c src/get_next_line_utils.c src/get_next_line.c src/init.c src/keys_draw.c src/parsing_color_resolution_texture.c src/parsing_map.c src/parsing_utils.c src/raycasting_init.c src/raycasting_move.c src/raycasting_utils.c src/raycasting.c src/save.c src/sprites.c src/rgb.c src/ft_isdigit.c src/ft_itoa.c src/main.c
 
 OBJS = ${SRCS:.c=.o}
 
