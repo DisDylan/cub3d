@@ -55,7 +55,7 @@ int		put_int_rgb(char *str, t_recup *recup)
 	}
 	while (str[i] == ' ')
 		i++;
-	if (comma == 2 && r != 0 && g != 0)
+	if (comma == 2 && r != -1 && g != -1)
 	{
 		b = ft_atoi(str + i);
 		i += ft_strlen(ft_itoa(b));
@@ -68,19 +68,6 @@ int		put_int_rgb(char *str, t_recup *recup)
 		    recup->indicateur2 = 1;
 		i++;
 	}
+    printf("r: %d; g: %d; b: %d\n", r, g, b);
     return(trgb(0, r, g, b));
 }
-/*
-int get_rgb(char *str, t_recup *recup)
-{
-    int i;
-    int rgb;
-
-    i = 1;
-    rgb = -1;
-    if (str[0] == 'F')
-        rgb = put_int_rgb(str, recup);
-    else if (str[0] == 'C')
-        rgb = put_int_rgb(str, recup);
-    return(rgb);
-}*/

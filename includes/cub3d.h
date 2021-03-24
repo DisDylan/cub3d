@@ -162,7 +162,6 @@ typedef struct		s_recup
 }					t_recup;
 
 int					ft_atoi(const char *str);
-//int					get_rgb(char *str, t_recup *recup);
 int					put_int_rgb(char *str, t_recup *recup);
 char				*ft_itoa(int n);
 int					ft_isdigit(int c);
