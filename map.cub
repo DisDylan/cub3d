@@ -5,8 +5,8 @@ EA ./textures/grass.xpm
 WE ./textures/stone.xpm
 
 S ./textures/vampire.xpm
-C 255, 0, 255
-F 255, 0, 255
+C 255, 1, 54
+F 255, 1, 255
 
 
          111111111111

@@ -26,13 +26,15 @@ int		put_int_rgb(char *str, t_recup *recup)
 	int comma;
 
 	i = 1;
+    g = -1;
+    b = -1;
     while (str[i] == ' ')
         i++;
 	comma = 0;
-	r = ft_atoi(str);
+	r = ft_atoi(str + i);
 	i += ft_strlen(ft_itoa(r));
 	while (str[i] && comma < 2)
-	{	
+	{
 		if (str[i] == ' ')
 			i++;
 		else if (str[i] == ',')
@@ -68,7 +70,7 @@ int		put_int_rgb(char *str, t_recup *recup)
 	}
     return(trgb(0, r, g, b));
 }
-
+/*
 int get_rgb(char *str, t_recup *recup)
 {
     int i;
@@ -81,4 +83,4 @@ int get_rgb(char *str, t_recup *recup)
     else if (str[0] == 'C')
         rgb = put_int_rgb(str, recup);
     return(rgb);
-}
+}*/

@@ -107,4 +107,5 @@ int		main(int argc, char **argv)
 	}
 	else
 		write(1, "Error\nArguments invalides\n", 30);
+	return (0);
 }

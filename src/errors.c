@@ -16,7 +16,7 @@ void	ft_verify_errors(t_recup *recup)
 {
 	if (ft_murs(recup) == 1)
 		ft_error(recup, "Map error\n");
-	if (recup->indicateur2 != 1)
+	if (recup->indicateur2 == 1)
 		ft_error(recup, "Erreur RGB");
 	if (recup->depart == 'x')
 		ft_error(recup, "Pas de joueur\n");
