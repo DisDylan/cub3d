@@ -6,13 +6,13 @@
 /*   By: dpoinsu <dpoinsu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 10:53:36 by dpoinsu           #+#    #+#             */
-/*   Updated: 2021/03/23 10:53:54 by dpoinsu          ###   ########.fr       */
+/*   Updated: 2021/03/29 10:12:12 by dpoinsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	ft_isdigit(int c)
+int			ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);
