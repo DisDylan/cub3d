@@ -12,7 +12,7 @@ CC = clang
 
 RM = rm -f
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
 
 .c.o:
 	${CC} ${CFLAGS} -c $< -o ${<:.c=.o} -I ${INCLUDES}
@@ -29,10 +29,3 @@ fclean:	clean
 	${RM} ${NAME}
 
 re:	fclean all
-
-test:
-	${CC} ${CFLAGS} -o cub3d ${SRCS} ${LIBS}
-	./cub3d map.cub
-
-test2:
-	${CC} ${CFLAGS} -o cub3d ${SRCS} ${LIBS}

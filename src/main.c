@@ -50,15 +50,15 @@ void	ft_parsing(char *fichier, t_recup *recup)
 	ret = 1;
 	str = NULL;
 	if ((fd = open(fichier, O_DIRECTORY)) != -1)
-		ft_error(recup, "Invalide : is a directory\n");
+		ft_error(recup, "Répertoire\n");
 	if ((fd = open(fichier, O_RDONLY)) == -1)
-		ft_error(recup, "Fichier .cub invalide\n");
+		ft_error(recup, "Erreur .cub\n");
 	recup->erreur = 0;
 	while (ret != 0)
 	{
 		ret = get_next_line(fd, &str, recup);
 		if (recup->erreur == 2)
-			ft_error(recup, "La partie parsing detecte une erreur\n");
+			ft_error(recup, "Erreur dans le parsing\n");
 		ft_color_resolution(&str, recup);
 		ft_texture(str, recup);
 		ft_map(str, recup);

@@ -68,6 +68,5 @@ int		put_int_rgb(char *str, t_recup *recup)
 		    recup->indicateur2 = 1;
 		i++;
 	}
-    printf("r: %d; g: %d; b: %d\n", r, g, b);
     return(trgb(0, r, g, b));
 }

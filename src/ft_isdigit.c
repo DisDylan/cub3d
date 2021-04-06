@@ -12,7 +12,7 @@
 
 #include "../includes/cub3d.h"
 
-int	ft_isdigit(int c)
+int			ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);
@@ -35,7 +35,6 @@ int			ft_atoi(const char *str)
 	i = 0;
 	neg = 1;
 	num = 0;
-	printf("str = %s\n", str);
 	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t' ||
 			str[i] == '\v' || str[i] == '\f' || str[i] == '\r')
 		i++;
@@ -50,7 +49,6 @@ int			ft_atoi(const char *str)
 		num = num * 10 + (str[i] - 48);
 		i++;
 	}
-	printf("num = %lu\n", num);
 	if (num > 9223372036854775807)
 		return (over(neg));
 	return ((int)num * neg);

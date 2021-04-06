@@ -90,3 +90,18 @@ char		*ft_itoa(int n)
 	ft_strrev(str);
 	return (str);
 }
+
+int			nblen(int n)
+{
+	int nb;
+
+	nb = 0;
+	if (n == 0)
+		return(1);
+	while (n > 0)
+	{
+		n /= 10;
+		nb++;
+	}
+	return(nb);
+}

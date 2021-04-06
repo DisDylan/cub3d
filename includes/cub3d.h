@@ -161,6 +161,7 @@ typedef struct		s_recup
 	t_sprxy			*sxy;
 }					t_recup;
 
+int					nblen(int n);
 int					ft_atoi(const char *str);
 int					put_int_rgb(char *str, t_recup *recup);
 char				*ft_itoa(int n);
