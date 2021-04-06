@@ -6,7 +6,7 @@
 /*   By: dpoinsu <dpoinsu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 11:03:37 by dpoinsu           #+#    #+#             */
-/*   Updated: 2021/03/23 11:03:50 by dpoinsu          ###   ########.fr       */
+/*   Updated: 2021/04/06 09:04:03 by dpoinsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static long	ft_abs(int n)
 
 static void	ft_strrev(char *str)
 {
-	int	length;
-	int	i;
+	int		length;
+	int		i;
 	char	swap;
 
 	length = ft_strlen(str);
@@ -67,7 +67,7 @@ char		*ft_itoa(int n)
 {
 	char	*str;
 	int		is_neg;
-	int	len;
+	int		len;
 
 	is_neg = (n < 0);
 	if (n == 0)
