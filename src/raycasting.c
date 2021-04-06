@@ -83,7 +83,7 @@ int		ft_mlx(t_recup *recup)
 {
 	ft_initialisation2(recup);
 	if (!(recup->data.mlx_ptr = mlx_init()))
-		ft_error(recup, "init mlx failes\n");
+		ft_error(recup, "Erreur mlx init\n");
 	mlx_get_screen_size(recup->data.mlx_ptr, &recup->screenx, &recup->screeny);
 	recup->rx = (recup->rx > recup->screenx) ? recup->screenx : recup->rx;
 	recup->ry = (recup->ry > recup->screeny) ? recup->screeny : recup->ry;
