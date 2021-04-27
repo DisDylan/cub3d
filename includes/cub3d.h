@@ -6,7 +6,7 @@
 /*   By: dpoinsu <dpoinsu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 08:04:16 by dpoinsu           #+#    #+#             */
-/*   Updated: 2021/03/17 08:21:08 by dpoinsu          ###   ########.fr       */
+/*   Updated: 2021/04/27 10:22:12 by dpoinsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <fcntl.h>
 # include <string.h>
 # include <math.h>
-# include "../mlx_linux/mlx.h"
+# include "../mlx_linuxx/mlx.h"
 
 # define ROTATE_LEFT	65361
 # define ROTATE_RIGHT	65363

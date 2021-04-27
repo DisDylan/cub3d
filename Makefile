@@ -4,7 +4,7 @@ OBJS = ${SRCS:.c=.o}
 
 INCLUDES = includes/cub.h
 
-LIBS = -Lmlx_linux -lmlx_Linux -lXext -lX11 -lm -lz
+LIBS = -Lmlx_linuxx -lmlx_Linux -lXext -lX11 -lm -lz
 
 NAME = cub3d
 
