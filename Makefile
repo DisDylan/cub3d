@@ -6,7 +6,7 @@ INCLUDES = includes/cub.h
 
 LIBS = -Lmlx_linuxx -lmlx_Linux -lXext -lX11 -lm -lz
 
-NAME = cub3d
+NAME = cub3D
 
 CC = clang
 

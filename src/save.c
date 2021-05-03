@@ -6,7 +6,7 @@
 /*   By: dpoinsu <dpoinsu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 09:04:27 by dpoinsu           #+#    #+#             */
-/*   Updated: 2021/03/17 09:04:28 by dpoinsu          ###   ########.fr       */
+/*   Updated: 2021/05/03 11:40:44 by dpoinsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_save(t_recup *recup)
 
 	y = recup->ry;
 	if ((fd = open("./image.bmp", O_CREAT | O_RDWR)) == -1)
-		ft_error(recup, "Impossible de creer .bmp\n");
+		ft_error(recup, "Impossible de créer le fichier .bmp\n");
 	ft_header(recup, fd);
 	while (y >= 0)
 	{
@@ -62,7 +62,6 @@ void	ft_save(t_recup *recup)
 		y--;
 	}
 	system("chmod 777 image.bmp");
-	ft_error(recup, "Non jrigole --save ok\n");
 }
 
 int		ft_check_save(char *str)
