@@ -34,19 +34,19 @@ void	ft_get_texture_adress(t_recup *recup)
 void	ft_get_texture(t_recup *recup)
 {
 	if (!(recup->texture[0].img = mlx_xpm_file_to_image(recup->data.mlx_ptr,
-					recup->no, &(recup->texture[0].width),
+					recup->so, &(recup->texture[0].width),
 					&(recup->texture[0].height))))
 		ft_error(recup, "Erreur texture\n");
 	if (!(recup->texture[1].img = mlx_xpm_file_to_image(recup->data.mlx_ptr,
-					recup->so, &(recup->texture[1].width),
+					recup->no, &(recup->texture[1].width),
 					&(recup->texture[1].height))))
 		ft_error(recup, "Erreur texture\n");
 	if (!(recup->texture[2].img = mlx_xpm_file_to_image(recup->data.mlx_ptr,
-					recup->we, &(recup->texture[2].width),
+					recup->ea, &(recup->texture[2].width),
 					&(recup->texture[2].height))))
 		ft_error(recup, "Erreur texture\n");
 	if (!(recup->texture[3].img = mlx_xpm_file_to_image(recup->data.mlx_ptr,
-					recup->ea, &(recup->texture[3].width),
+					recup->we, &(recup->texture[3].width),
 					&(recup->texture[3].height))))
 		ft_error(recup, "Erreur texture\n");
 	if (!(recup->texture[4].img = mlx_xpm_file_to_image(recup->data.mlx_ptr,
