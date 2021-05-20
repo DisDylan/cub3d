@@ -36,6 +36,7 @@ int		ft_parsing_map(char *fichier, t_recup *recup)
 		}
 		free(str);
 	}
+	//check_map(recup);
 	close(fd);
 	ft_init_sprite(recup);
 	return (0);

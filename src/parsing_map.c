@@ -12,30 +12,7 @@
 
 #include "../includes/cub3d.h"
 
-int		ft_murs(t_recup *recup)
-{
-	int i;
 
-	i = 0;
-	while (i < recup->nblines)
-	{
-		if (recup->map[i][0] != '1')
-			return (1);
-		i++;
-	}
-	i = 0;
-	while (i < recup->nblines)
-	{
-		if (recup->map[i][recup->sizeline - 1] != '1')
-			return (1);
-		i++;
-	}
-	if (ft_murs_util(recup->map[0]) == 1)
-		return (1);
-	if (ft_murs_util(recup->map[recup->nblines - 1]) == 1)
-		return (1);
-	return (0);
-}
 
 int		ft_copy_map(char *str, t_recup *recup)
 {
@@ -44,21 +21,11 @@ int		ft_copy_map(char *str, t_recup *recup)
 
 	j = 0;
 	recup->map[i] = NULL;
-	if (!(recup->map[i] = malloc(sizeof(char) * recup->sizeline + 1)))
+	if (!(recup->map[i] = malloc(sizeof(char) * ft_strlen(str) + 1)))
 		return (0);
-	while (str[j] != '\0')
+	while (str[j])
 	{
-		if (ft_depart(str[j], recup, i, j) == 1)
-			recup->map[i][j] = '0';
-		else if (str[j] == ' ')
-			recup->map[i][j] = '1';
-		else
-			recup->map[i][j] = str[j];
-		j++;
-	}
-	while (j <= (recup->sizeline - 1))
-	{
-		recup->map[i][j] = '1';
+		recup->map[i][j] = str[j];
 		j++;
 	}
 	recup->map[i][j] = '\0';

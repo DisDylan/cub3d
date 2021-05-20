@@ -6,7 +6,7 @@
 /*   By: dpoinsu <dpoinsu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 08:04:16 by dpoinsu           #+#    #+#             */
-/*   Updated: 2021/04/27 10:22:12 by dpoinsu          ###   ########.fr       */
+/*   Updated: 2021/05/20 10:24:46 by dpoinsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ typedef struct		s_recup
 	int				count2;
 	int				sum;
 	int				wrongcharmap;
+	int				comma;
 	t_data			texture[5];
 	t_data			data;
 	t_ray			ray;
@@ -161,6 +162,12 @@ typedef struct		s_recup
 	t_sprxy			*sxy;
 }					t_recup;
 
+int					check_map(t_recup *recup);
+void				check_line(char *str, t_recup *recup, int i);
+int					check_letter(char c);
+void				check_item(char c, t_recup *recup);
+void				check_first_line(char *line, t_recup *recup);
+void				check_min_max(int r, int g, int b, t_recup *recup);
 int					nblen(int n);
 int					ft_atoi(const char *str);
 int					put_int_rgb(char *str, t_recup *recup);
