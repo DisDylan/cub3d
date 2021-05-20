@@ -6,7 +6,7 @@
 /*   By: dpoinsu <dpoinsu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 08:23:40 by dpoinsu           #+#    #+#             */
-/*   Updated: 2021/03/17 08:58:17 by dpoinsu          ###   ########.fr       */
+/*   Updated: 2021/05/20 15:13:50 by dpoinsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,14 @@ int		ft_copy_map(char *str, t_recup *recup)
 
 	j = 0;
 	recup->map[i] = NULL;
-	if (!(recup->map[i] = malloc(sizeof(char) * recup->sizeline + 1)))
+	if (!(recup->map[i] = malloc(sizeof(char) * ft_strlen(str))))
 		return (0);
 	while (str[j] != '\0')
 	{
 		if (ft_depart(str[j], recup, i, j) == 1)
 			recup->map[i][j] = '0';
-		else if (str[j] == ' ')
-			recup->map[i][j] = '1';
 		else
 			recup->map[i][j] = str[j];
-		j++;
-	}
-	while (j <= (recup->sizeline - 1))
-	{
-		recup->map[i][j] = '1';
 		j++;
 	}
 	recup->map[i][j] = '\0';

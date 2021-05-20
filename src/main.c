@@ -1,16 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpoinsu <dpoinsu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/11 08:59:23 by dpoinsu           #+#    #+#             */
-/*   Updated: 2021/03/17 08:59:24 by dpoinsu          ###   ########.fr       */
+/*   Updated: 2021/05/20 15:12:23 by dpoinsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+char	*ft_strchr(const char *s, int c)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == (char)c)
+			return ((char*)s + i);
+		i++;
+	}
+	if (s[i] == (char)c)
+		return ((char*)(s + i));
+	return (NULL);
+}
 
 int		ft_parsing_map(char *fichier, t_recup *recup)
 {
@@ -19,7 +35,6 @@ int		ft_parsing_map(char *fichier, t_recup *recup)
 	char		*str;
 
 	ret = 1;
-	str = NULL;
 	fd = open(fichier, O_RDONLY);
 	if (!(recup->map = malloc(sizeof(char*) * recup->nblines)))
 		return (0);
@@ -36,6 +51,7 @@ int		ft_parsing_map(char *fichier, t_recup *recup)
 		}
 		free(str);
 	}
+	check_map(recup);
 	close(fd);
 	ft_init_sprite(recup);
 	return (0);

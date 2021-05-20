@@ -153,6 +153,7 @@ typedef struct		s_recup
 	int				count2;
 	int				sum;
 	int				wrongcharmap;
+	int				comma;
 	t_data			texture[5];
 	t_data			data;
 	t_ray			ray;
@@ -161,6 +162,12 @@ typedef struct		s_recup
 	t_sprxy			*sxy;
 }					t_recup;
 
+char				*ft_strchr(const char *s, int c);
+void				check_first_line(char *line, t_recup *recup);
+void				check_item(char c, t_recup *recup);
+void				check_line(char *str, t_recup *recup, int i);
+int					check_letter(char c);
+int					check_map(t_recup *recup);
 int					nblen(int n);
 int					ft_atoi(const char *str);
 int					put_int_rgb(char *str, t_recup *recup);
