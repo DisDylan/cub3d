@@ -23,9 +23,9 @@ void	ft_verify_errors(t_recup *recup)
 	if (recup->multijoueurs == 1)
 		ft_error(recup, "Trop de joueurs\n");
 	if (recup->lignevide == 1)
-		ft_error(recup, "MAP ERROR\n");
+		ft_error(recup, "MAP ERROR ligne\n");
 	if (recup->wrongcharmap == 2)
-		ft_error(recup, "MAP ERROR\n");
+		ft_error(recup, "MAP ERROR char\n");
 }
 
 void	ft_error2(t_recup *recup)
