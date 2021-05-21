@@ -15,13 +15,20 @@
 void	check_first_line(char *line, t_recup *recup)
 {
 	if (ft_strchr(line, '0') != NULL)
-		recup->erreur = 1;
+		{
+			printf("erreur içi1\n");
+			recup->erreur = 1;
+		}
+	printf("%s\n", line);
 }
 
 void	check_item(char c, t_recup *recup)
 {
 	if (c == '0')
-		recup->erreur = 1;
+		{
+			printf("erreur içi2\n");
+			recup->erreur = 1;
+		}
 }
 
 int		check_letter(char c)
@@ -41,6 +48,7 @@ void	check_line(char *str, t_recup *recup, int i)
 	j = 0;
 	while (str[j])
 	{
+		printf("%c", str[j]);
 		if (j == 0)
 			check_item(str[j], recup);
 		else if (j == (int)ft_strlen(str) - 1)
@@ -50,17 +58,28 @@ void	check_line(char *str, t_recup *recup, int i)
 		}
 		else if (str[j] == '0')
 		{
-			if (recup->map[i - 1][j] == ' ' || recup->map[i + 1][j] == ' ' ||
-					str[j - 1] == ' ' || str[j + 1] == ' ')
-				recup->erreur = 1;
 			if (ft_strlen(recup->map[i - 1]) <= j ||
 					ft_strlen(recup->map[i + 1]) <= j)
+			{
+				printf("erreur içi3\n");
 				recup->erreur = 1;
+				break ;
+			}
+			else if (recup->map[i - 1][j] == ' ' || recup->map[i + 1][j] == ' ' ||
+					str[j - 1] == ' ' || str[j + 1] == ' ')
+		{
+			printf("erreur içi4\n");
+			recup->erreur = 1;
+		}
 		}
 		else if (check_letter(str[j]) == 1)
+		{
+			printf("erreur içi5\n");
 			recup->erreur = 1;
+		}
 		j++;
 	}
+	printf("\n");
 }
 
 int		check_map(t_recup *recup)
@@ -68,15 +87,16 @@ int		check_map(t_recup *recup)
 	int i;
 
 	i = 0;
-	while (recup->map[i])
+	while (i < recup->nblines)
 	{
+		printf("%d : ok\n", i);
 		if (i == 0)
 		{
 			check_first_line(recup->map[i], recup);
 			i++;
 			continue;
 		}
-		else if (i == (int)(ft_strlen(*recup->map) - 1))
+		else if (i == (int)(ft_strlen(*recup->map) - 2))
 		{
 			check_first_line(recup->map[i], recup);
 			break ;
@@ -85,5 +105,6 @@ int		check_map(t_recup *recup)
 			check_line(recup->map[i], recup, i);
 		i++;
 	}
+	printf("ok");
 	return (0);
 }
